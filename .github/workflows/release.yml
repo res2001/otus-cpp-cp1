@@ -1,10 +1,12 @@
 name: 'C++ CI'
-
 on:
   push:
     branches:
       - master
       - feature/github_actions
+
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 jobs:
   build:
@@ -23,7 +25,6 @@ jobs:
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
         with:
           tag_name: ${{ github.run_number }}
           release_name: Release ${{ github.run_number }}
