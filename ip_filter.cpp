@@ -1,9 +1,9 @@
 #include <cassert>
 #include <cstdlib>
 #include <cstring>
+#include <cstdint>
 #include <iostream>
 #include <string>
-#include <string_view>
 #include <vector>
 #include <algorithm>
 #include <exception>
