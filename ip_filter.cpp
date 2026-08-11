@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <iterator>
 #include <exception>
 #include <sstream>
 #include <utility>
@@ -56,7 +57,9 @@ struct IPRepresentation {
     }
 };
 
-static void make_ip_pool(std::vector<IPRepresentation>& ip_pool)
+using ip_pool_t = std::vector<IPRepresentation>;
+
+static void make_ip_pool(ip_pool_t& ip_pool)
 {
     ip_pool.clear();
     ip_pool.reserve(256);
@@ -85,17 +88,83 @@ static void make_ip_pool(std::vector<IPRepresentation>& ip_pool)
     }
 }
 
+static void ip_pool_dump(const ip_pool_t& ip_pool)
+{
+    for(auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
+        std::cout << ip->to_string() << std::endl;
+}
+
+template <bool is_or = false>
+static ip_pool_t ip_filter(const ip_pool_t& ip_pool, short o1 = -1, short o2 = -1, short o3 = -1, short o4 = -1)
+{
+    assert(o1 );
+    ip_pool_t filter_ip;
+
+    do {
+        if (    (o1 <= 0  && o2 < 0   && o3 < 0   && o4 < 0)
+            ||  (o1 > 255 || o2 > 255 || o3 > 255 || o4 > 255)) {
+            std::stringstream ss;
+            ss << "ip_filter: Invalid argument: " << o1 << ", " << o2 << ", " << o3 << ", " << o4 << std::endl;
+            throw std::invalid_argument(ss.str());
+        }
+
+        filter_ip.reserve(256);
+
+        if constexpr (is_or) {
+            std::copy_if(ip_pool.cbegin(), ip_pool.cend(),
+                std::back_inserter(filter_ip),
+                [o1, o2, o3, o4](const auto& ip){ 
+                    if (o1 > 0  && o1 == ip.uint8[3])
+                        return true;
+                    if (o2 >= 0 && o2 == ip.uint8[2])
+                        return true;
+                    if (o2 >= 0 && o2 == ip.uint8[1])
+                        return true;
+                    if (o2 >= 0 && o2 == ip.uint8[0])
+                        return true;
+                    return false;
+                });
+        } else {
+            uint32_t filter_addr = 0;
+            uint32_t filter_mask = 0;
+            if (o1 > 0) {
+                filter_addr |= static_cast<uint8_t>(o1) << 24;
+                filter_mask |= 0xff << 24;
+            }
+            if (o2 > 0) {
+                filter_addr |= static_cast<uint8_t>(o2) << 16;
+                filter_mask |= 0xff << 16;
+            }
+            if (o3 > 0) {
+                filter_addr |= static_cast<uint8_t>(o3) << 8;
+                filter_mask |= 0xff << 8;
+            }
+            if (o4 > 0) {
+                filter_addr |= static_cast<uint8_t>(o4);
+                filter_mask |= 0xff;
+            }
+
+            std::copy_if(ip_pool.cbegin(), ip_pool.cend(),
+                std::back_inserter(filter_ip),
+                [filter_addr, filter_mask](const auto& ip){ return (ip.uint32 & filter_mask) == filter_addr; }
+            );
+        }
+    } while(false);
+
+    return filter_ip;
+}
+
 int main([[maybe_unused]]int argc, [[maybe_unused]]char const *argv[])
 {
     try
     {
-        std::vector<IPRepresentation> ip_pool;
+        ip_pool_t ip_pool;
         make_ip_pool(ip_pool);
 
         std::sort(ip_pool.begin(), ip_pool.end(), [](auto& a, auto& b) { return a.uint32 > b.uint32; });
         // reverse lexicographically sort
         // std::sort(ip_pool.begin(), ip_pool.end(), [](const auto& a, const auto& b) { 
-        //     int res = a.str[0].compare(b.str[0]);
+        //     const int res = a.str[0].compare(b.str[0]);
         //     if (res != 0) return res > 0;
 
         //     res = a.str[1].compare(b.str[1]);
@@ -110,83 +179,16 @@ int main([[maybe_unused]]int argc, [[maybe_unused]]char const *argv[])
         //     return false;
         // });
 
-        for(auto ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
-            std::cout << ip->to_string() << std::endl;
+        ip_pool_dump(ip_pool);
 
-        // 222.173.235.246
-        // 222.130.177.64
-        // 222.82.198.61
-        // ...
-        // 1.70.44.170
-        // 1.29.168.152
-        // 1.1.234.8
+        ip_pool_t filter_ip = ip_filter(ip_pool, 1);
+        ip_pool_dump(filter_ip);
 
-        // TODO filter by first byte and output
-        // ip = filter(1)
-        // 1.231.69.33
-        // 1.87.203.225
-        // 1.70.44.170
-        // 1.29.168.152
-        // 1.1.234.8
-        for_each(ip_pool.cbegin(), ip_pool.cend(), 
-            [](const auto& ip){
-                if (ip.uint8[3] == 1)
-                    std::cout << ip.to_string() << std::endl;
-            });
-
-        // TODO filter by first and second bytes and output
-        // ip = filter(46, 70)
-        // 46.70.225.39
-        // 46.70.147.26
-        // 46.70.113.73
-        // 46.70.29.76
-        for_each(ip_pool.cbegin(), ip_pool.cend(), 
-            [](const auto& ip){
-                if (ip.uint8[3] == 46 && ip.uint8[2] == 70)
-                    std::cout << ip.to_string() << std::endl;
-            });
-
-        // TODO filter by any byte and output
-        // ip = filter_any(46)
-        // 186.204.34.46
-        // 186.46.222.194
-        // 185.46.87.231
-        // 185.46.86.132
-        // 185.46.86.131
-        // 185.46.86.131
-        // 185.46.86.22
-        // 185.46.85.204
-        // 185.46.85.78
-        // 68.46.218.208
-        // 46.251.197.23
-        // 46.223.254.56
-        // 46.223.254.56
-        // 46.182.19.219
-        // 46.161.63.66
-        // 46.161.61.51
-        // 46.161.60.92
-        // 46.161.60.35
-        // 46.161.58.202
-        // 46.161.56.241
-        // 46.161.56.203
-        // 46.161.56.174
-        // 46.161.56.106
-        // 46.161.56.106
-        // 46.101.163.119
-        // 46.101.127.145
-        // 46.70.225.39
-        // 46.70.147.26
-        // 46.70.113.73
-        // 46.70.29.76
-        // 46.55.46.98
-        // 46.49.43.85
-        // 39.46.86.85
-        // 5.189.203.46
-        for_each(ip_pool.cbegin(), ip_pool.cend(), 
-            [](const auto& ip){
-                if (ip.uint8[0] == 46 || ip.uint8[1] == 46 || ip.uint8[2] == 46 || ip.uint8[3] == 46)
-                    std::cout << ip.to_string() << std::endl;
-            });
+        filter_ip = ip_filter(ip_pool, 46, 70);
+        ip_pool_dump(filter_ip);
+        
+        filter_ip = ip_filter<true>(ip_pool, 46, 46, 46, 46);
+        ip_pool_dump(filter_ip);
     }
     catch(const std::exception &e)
     {
