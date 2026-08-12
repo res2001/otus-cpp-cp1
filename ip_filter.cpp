@@ -10,6 +10,8 @@
 #include <exception>
 #include <sstream>
 #include <utility>
+#include <type_traits>
+#include <limits.h>
 
 constexpr size_t IPV4_ADDRESS_LENGTH = 16;
 
@@ -94,64 +96,117 @@ static void ip_pool_dump(const ip_pool_t& ip_pool)
         std::cout << ip->to_string() << std::endl;
 }
 
-template <bool is_or = false>
-static ip_pool_t ip_filter(const ip_pool_t& ip_pool, short o1 = -1, short o2 = -1, short o3 = -1, short o4 = -1)
+struct ip_filter_args_t {
+    uint16_t num;
+    int16_t o[4];
+
+    ip_filter_args_t() noexcept : num(0), o() {}
+};
+
+template<typename T>
+static void error_arguments_list(T a)
 {
-    assert(o1 );
+    std::cout << a << std::endl;
+}
+template <typename T1, typename T2, typename... Args>
+static void error_arguments_list(T1 a, T2 b, Args... args)
+{
+    std::cout << a << ", ";
+    error_arguments_list(b, args...);
+}
+
+static ip_pool_t ip_filter_any(const ip_pool_t& ip_pool, uint8_t o)
+{
     ip_pool_t filter_ip;
+    filter_ip.reserve(256);
 
-    do {
-        if (    (o1 <= 0  && o2 < 0   && o3 < 0   && o4 < 0)
-            ||  (o1 > 255 || o2 > 255 || o3 > 255 || o4 > 255)) {
-            std::stringstream ss;
-            ss << "ip_filter: Invalid argument: " << o1 << ", " << o2 << ", " << o3 << ", " << o4 << std::endl;
-            throw std::invalid_argument(ss.str());
-        }
-
-        filter_ip.reserve(256);
-
-        if constexpr (is_or) {
-            std::copy_if(ip_pool.cbegin(), ip_pool.cend(),
-                std::back_inserter(filter_ip),
-                [o1, o2, o3, o4](const auto& ip){ 
-                    if (o1 > 0  && o1 == ip.uint8[3])
-                        return true;
-                    if (o2 >= 0 && o2 == ip.uint8[2])
-                        return true;
-                    if (o2 >= 0 && o2 == ip.uint8[1])
-                        return true;
-                    if (o2 >= 0 && o2 == ip.uint8[0])
-                        return true;
-                    return false;
-                });
-        } else {
-            uint32_t filter_addr = 0;
-            uint32_t filter_mask = 0;
-            if (o1 > 0) {
-                filter_addr |= static_cast<uint8_t>(o1) << 24;
-                filter_mask |= 0xff << 24;
+    std::copy_if(ip_pool.cbegin(), ip_pool.cend(),
+        std::back_inserter(filter_ip),
+        [o](const auto& ip){ 
+            for (uint16_t i = 0; i < 4; ++i) {
+                if (o == ip.uint8[i])
+                    return true;
             }
-            if (o2 > 0) {
-                filter_addr |= static_cast<uint8_t>(o2) << 16;
-                filter_mask |= 0xff << 16;
-            }
-            if (o3 > 0) {
-                filter_addr |= static_cast<uint8_t>(o3) << 8;
-                filter_mask |= 0xff << 8;
-            }
-            if (o4 > 0) {
-                filter_addr |= static_cast<uint8_t>(o4);
-                filter_mask |= 0xff;
-            }
-
-            std::copy_if(ip_pool.cbegin(), ip_pool.cend(),
-                std::back_inserter(filter_ip),
-                [filter_addr, filter_mask](const auto& ip){ return (ip.uint32 & filter_mask) == filter_addr; }
-            );
-        }
-    } while(false);
+            return false;
+        });
 
     return filter_ip;
+}
+
+template<bool is_or>
+static ip_pool_t ip_filter_impl(const ip_pool_t& ip_pool, ip_filter_args_t& sargs)
+{
+    if (sargs.o[0] <= 0 && sargs.o[1] < 0 && sargs.o[2] < 0 && sargs.o[3] < 0) {
+        std::stringstream ss;
+        ss << "ip_filter: Invalid argument: " << sargs.o[0] << ", " << sargs.o[0] << ", " << sargs.o[0] << ", " << sargs.o[0] << std::endl;
+        throw std::invalid_argument(ss.str());
+    }
+
+    ip_pool_t filter_ip;
+    filter_ip.reserve(256);
+
+    if constexpr (is_or) {
+        std::copy_if(ip_pool.cbegin(), ip_pool.cend(),
+            std::back_inserter(filter_ip),
+            [sargs = std::as_const(sargs)](const auto& ip){ 
+                for (uint16_t i = 0; i < sargs.num; ++i) {
+                    if (sargs.o[i] > 0 && sargs.o[i] == ip.uint8[i])
+                        return true;
+                }
+                return false;
+            });
+    } else {
+        uint32_t filter_addr = 0;
+        uint32_t filter_mask = 0;
+        for (uint16_t i = 0; i < sargs.num; ++i) {
+            if (sargs.o[i] > 0) {
+                const int shift = 32 - (i + 1) * CHAR_BIT;
+                filter_addr |= static_cast<uint8_t>(sargs.o[i]) << shift;
+                filter_mask |= 0xff << shift;
+            }
+        }
+
+        std::copy_if(ip_pool.cbegin(), ip_pool.cend(),
+            std::back_inserter(filter_ip),
+            [filter_addr, filter_mask](const auto& ip){ return (ip.uint32 & filter_mask) == filter_addr; }
+        );
+    }
+
+    return filter_ip;
+}
+template <bool is_or, typename T, typename... Args>
+static ip_pool_t ip_filter_impl(const ip_pool_t& ip_pool, ip_filter_args_t& sargs, T o, Args... args)
+{
+    static_assert(std::is_convertible_v<T, int16_t>);
+
+    if (sargs.num < 4) {
+        if (o > 255) {
+            std::stringstream ss;
+            ss << "ip_filter: Invalid argument: ";
+            for (uint16_t i = 0; i < sargs.num; ++i)
+                ss << sargs.o[i] << ", ";
+            ss << o << std::endl;
+            throw std::invalid_argument(ss.str());
+        }
+        if (o >= 0)
+            sargs.o[sargs.num++] = static_cast<int16_t>(o);
+        else
+            sargs.o[sargs.num++] = -1;
+
+        return ip_filter_impl<is_or>(ip_pool, sargs, args...);
+    }
+    if constexpr (sizeof...(Args) > 0) {
+        std::cout << "Any extra arguments will be ignored: ";
+        error_arguments_list(args...);
+    }
+    return ip_filter_impl<is_or>(ip_pool, sargs);
+}
+
+template <bool is_or = false, typename... Args>
+static ip_pool_t ip_filter(const ip_pool_t& ip_pool, Args... args)
+{
+    ip_filter_args_t filter_args;
+    return ip_filter_impl<is_or>(ip_pool, filter_args, args...);
 }
 
 int main([[maybe_unused]]int argc, [[maybe_unused]]char const *argv[])
@@ -187,7 +242,7 @@ int main([[maybe_unused]]int argc, [[maybe_unused]]char const *argv[])
         filter_ip = ip_filter(ip_pool, 46, 70);
         ip_pool_dump(filter_ip);
         
-        filter_ip = ip_filter<true>(ip_pool, 46, 46, 46, 46);
+        filter_ip = ip_filter_any(ip_pool, 46);
         ip_pool_dump(filter_ip);
     }
     catch(const std::exception &e)
