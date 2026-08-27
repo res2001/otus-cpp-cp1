@@ -7,13 +7,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-project(ip_filter VERSION ${PROJECT_VESRION})
+project(allocator VERSION ${PROJECT_VESRION})
 
-option(WITH_BOOST_TEST "Whether to build Boost test" ON)
+option(WITH_BOOST_TEST "Whether to build Boost test" OFF)
 
 configure_file(version.h.in version.h)
 
-add_executable(${PROJECT_NAME} ip_filter.cpp)
+add_executable(${PROJECT_NAME} main.cpp)
 add_library(helloworld lib.cpp)
 
 target_include_directories(${PROJECT_NAME}
