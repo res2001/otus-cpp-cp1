@@ -43,7 +43,6 @@ void print_map(const Map& map) {
 }
 
 void test_std_map() {
-    std::cout << "Test std::map<int, int, MyAllocator>\n";
     Map map1;
     for (int i = 0; i < 10; ++i) {          /* emplace */
         map1.emplace(i, factorial(i));
@@ -91,8 +90,6 @@ void test_std_map() {
 }
 
 void test_std_forward_list() {
-    std::cout << "Test std::forward_list<int, MyAllocator>\n";
-
     FWL fl1;                                /* forward list.emplace */
     for (int i = 0; i < 10; ++i)
         fl1.emplace_front(i);
@@ -116,7 +113,6 @@ void test_std_forward_list() {
 }
 
 void test_std_list() {
-    std::cout << "Test std::list<int, MyAllocator>\n";
     LST ls1;                                /* list.emplace */
     for (int i = 0; i < 10; ++i)
         ls1.emplace_back(i);
@@ -169,15 +165,33 @@ void test_myforwadrd_list() {
 }
 
 int main(int, char **) {
+    std::cout << "Test std::map<int, int, MyAllocator>\n";
+    allocate_count = deallocate_count = 0;
     test_std_map();
+    // std::cout << "allocate_count=" << allocate_count << " deallocate_count=" << deallocate_count << std::endl;
+    assert(allocate_count == 35 && deallocate_count == 35);
+    std::cout << "Test std::map<int, int, MyAllocator>: PASS!\n";
+
+    std::cout << "Test std::forward_list<int, MyAllocator>\n";
+    allocate_count = deallocate_count = 0;
     test_std_forward_list();
+    assert(allocate_count == 20 && deallocate_count == 20);
+    std::cout << "Test std::forward_list<int, MyAllocator>: PASS!\n";
+
+    std::cout << "Test std::list<int, MyAllocator>\n";
+    allocate_count = deallocate_count = 0;
     test_std_list();
+    assert(allocate_count == 20 && deallocate_count == 20);
+    std::cout << "Test std::list<int, MyAllocator>: PASS!\n";
 
     std::cout << "Test MyForwardList<int, std::allocator>\n";
+    allocate_count = deallocate_count = 0;
     test_myforwadrd_list<std::allocator<int>>();
+    assert(allocate_count == 0 && deallocate_count == 0);
+    std::cout << "Test MyForwardList<int, std::allocator>: PASS\n";
+
     std::cout << "Test MyForwardList<int, MyAllocator>\n";
     test_myforwadrd_list<MyAllocator<int>>();
-
-    std::cout << "allocate_count=" << allocate_count << " deallocate_count=" << deallocate_count << std::endl;
-    assert(allocate_count == deallocate_count);
+    assert(allocate_count == 20 && deallocate_count == 20);
+    std::cout << "Test MyForwardList<int, MyAllocator>: PASS\n";
 }

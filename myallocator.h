@@ -14,7 +14,7 @@ extern uint32_t allocator_num;
 extern uint32_t allocate_count;
 extern uint32_t deallocate_count;
 
-template<class T>
+template<class T, std::size_t begin_default_pool_size = 4>
 struct MyAllocator
 {
     using value_type = T;
@@ -25,7 +25,6 @@ struct MyAllocator
     using propagate_on_container_swap = std::true_type;
 
     static constexpr size_type max_pool_size = 1024;
-    static constexpr size_type begin_default_pool_size = 4;
 
     MyAllocator() noexcept : allocator_id(++allocator_num) {}
 
