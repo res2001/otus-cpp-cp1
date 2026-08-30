@@ -1,197 +1,80 @@
-#include "myallocator.h"
-#include "myfwdlist.h"
 #include <iostream>
-#include <map>
-#include <forward_list>
+#include <string>
+#include <vector>
 #include <list>
+#include <tuple>
 #include <type_traits>
 #include <cstdint>
 #include <cassert>
+#include <climits>
 
-uint32_t allocator_num = 0;
-uint32_t allocate_count = 0;
-uint32_t deallocate_count = 0;
-
-int factorial(int number) {
-    int res = 1;
-    for (int i = 2; i <= number; ++i) {
-        res *= i;
-    }
-    return res;
-}
-
-using Map = std::map<int, int, std::less<int>, MyAllocator<std::map<int, int>::value_type>>;
-using FWL = std::forward_list<int, MyAllocator<std::forward_list<int>::value_type>>;
-using LST = std::list<int, MyAllocator<std::list<int>::value_type>>;
-
-static_assert(std::is_copy_constructible_v<MyForwardList<int>>);
-static_assert(std::is_move_constructible_v<MyForwardList<int>>);
-static_assert(std::is_copy_assignable_v<MyForwardList<int>>);
-static_assert(std::is_move_assignable_v<MyForwardList<int>>);
-static_assert(std::allocator_traits<MyAllocator<int>>::is_always_equal::value || 
-            std::is_nothrow_swappable_v<MyAllocator<int>>);
-
-std::ostream& operator<<(std::ostream& stream, Map::const_iterator& it) {
-    stream << it->first << ' ' << it->second;
-    return stream;
-}
-
-void print_map(const Map& map) {
-    for (auto it = map.cbegin(); it != map.cend(); ++it) {
-        std::cout << it << std::endl;
-    }
-}
-
-void test_std_map() {
-    Map map1;
-    for (int i = 0; i < 10; ++i) {          /* emplace */
-        map1.emplace(i, factorial(i));
-    }
-    assert(map1.size() == 10);
-    for (int i = 0; i < 10; ++i)
-        assert(map1[i] == factorial(i));
-    std::cout << "MAP1:\n"; print_map(map1);
-
-    Map map2(map1.cbegin(), map1.cend());   /* конструктор с итераторами */
-    assert(map2.size() == map1.size() && map1.size() == 10);
-    for (int i = 0; i < 10; ++i)
-        assert(map1[i] == map2[i]);
-    // std::cout << "MAP2:\n"; print_map(map2);
-
-    for (int i = 0; i < 10; ++i)            /* удаление элементов */
-        map1.erase(i);
-    assert(map1.size() == 0);
-
-    map1 = map2;                            /* копировние */
-    assert(map2.size() == map1.size() && map1.size() == 10);
-    for (int i = 0; i < 10; ++i)
-        assert(map1[i] == map2[i]);
-    map1[9] = 0;
-    assert(map1[9] == 0 && map2[9] != 0);
-    // std::cout << "MAP1:\n"; print_map(map1);
-
-    auto alloc1 = map1.get_allocator();
-    auto alloc2 = map2.get_allocator();
-    assert(alloc1 != alloc2);
-
-    map1 = std::move(map2);                 /* перемещение */
-    assert(map2.size() == 0);
-    assert(map1.size() == 10);
-    for (int i = 0; i < 10; ++i)
-        assert(map1[i] == factorial(i));
-    // std::cout << "MAP1:\n"; print_map(map1);
-    // std::cout << "MAP2:\n"; print_map(map2);
-
-    Map map3{{0,0}, {1,1}, {2,2}, {3,3}, {4,4}}; /* initializer_list */
-    assert(map3.size() == 5);
-    for (int i = 0; i < 5; ++i)
-        assert(map3[i] == i);
-    // std::cout << "MAP3:\n"; print_map(map3);
-}
-
-void test_std_forward_list() {
-    FWL fl1;                                /* forward list.emplace */
-    for (int i = 0; i < 10; ++i)
-        fl1.emplace_front(i);
-    int tmp = 9;
-    for (auto it = fl1.cbegin(); it != fl1.cend(); ++it)
-        assert(*it == tmp--);
-
-    FWL fl2(fl1);                           /* forward list.copy ctor */
-    {
-        auto it1 = fl1.cbegin();
-        auto it2 = fl2.cbegin();
-        for (int i = 0; i < 10; ++i)
-            assert(*it1 == *it2);
-    }
-
-    fl1 = std::move(fl2);                   /* forward list.move assign */
-    assert(fl2.empty());
-    tmp = 9;
-    for (auto it = fl1.cbegin(); it != fl1.cend(); ++it)
-        assert(*it == tmp--);
-}
-
-void test_std_list() {
-    LST ls1;                                /* list.emplace */
-    for (int i = 0; i < 10; ++i)
-        ls1.emplace_back(i);
-    int tmp = 0;
-    for (auto it = ls1.cbegin(); it != ls1.cend(); ++it)
-        assert(*it == tmp++);
-
-    LST ls2(ls1);                          /* list.copy ctor */
-    assert(ls2.size() == ls1.size() && ls1.size() == 10);
-    {
-        auto it1 = ls1.cbegin();
-        auto it2 = ls2.cbegin();
-        for (int i = 0; i < 10; ++i)
-            assert(*it1 == *it2);
-    } 
-
-    ls2 = std::move(ls1);                   /* list.move assign */
-    assert(ls1.empty());
-    tmp = 0;
-    for (auto it = ls2.cbegin(); it != ls2.cend(); ++it)
-        assert(*it == tmp++);
-}
-
-template<typename Alloc>
-void test_myforwadrd_list() {
-    using MYFWL = MyForwardList<int, Alloc>;
-    MYFWL fl1;                                /* list.emplace */
-    for (int i = 9; i >= 0; --i)
-        fl1.emplace_front(i);
-    int tmp = 0;
-    for (auto it = fl1.cbegin(); it != fl1.cend(); ++it) {
-        assert(*it == tmp++);
-        std::cout << (tmp == 0 ? "" : " ") << *it;
+template<typename T>
+std::enable_if_t< std::is_integral_v<T>, void>
+print_ip(const T val) {
+    for (uint32_t i = 0; i < sizeof(val) ; ++i) {
+        const uint64_t shift = (sizeof(val) - i - 1)  * CHAR_BIT;
+        const T mask = static_cast<T>(0xFFLLU << shift);
+        const uint16_t cur_octet = static_cast<uint16_t>(static_cast<uint8_t>((val & mask) >> shift));
+        std::cout << (i == 0 ? "" : ".") << cur_octet;
     }
     std::cout << std::endl;
-
-    MYFWL fl2(fl1);                          /* list.copy ctor */
-    {
-        auto it1 = fl1.cbegin();
-        auto it2 = fl2.cbegin();
-        for (int i = 0; i < 10; ++i)
-            assert(*it1++ == *it2++);
-    } 
-
-    fl2 = std::move(fl1);                   /* list.move assign */
-    assert(fl1.empty());
-    tmp = 0;
-    for (auto it = fl2.cbegin(); it != fl2.cend(); ++it)
-        assert(*it == tmp++);
 }
 
+void print_ip(const std::string& val) {
+    std::cout << val << std::endl;
+}
+
+template<typename T, typename = void>
+struct has_cbegin_cend : std::false_type {};
+
+template<typename T>
+struct has_cbegin_cend<T, std::void_t<
+    decltype(std::declval<T>().cbegin()),
+    decltype(std::declval<T>().cend())
+>> : std::true_type {};
+template<typename T>
+inline constexpr bool has_cbegin_cend_v = has_cbegin_cend<T>::value;
+
+static_assert(has_cbegin_cend_v<std::vector<int>>, "Has cbegin/cend");
+static_assert(has_cbegin_cend_v<std::list<int>>, "Has cbegin/cend");
+static_assert(!has_cbegin_cend_v<int>, "int doesn't have cbegin/cend");
+
+template <typename T>
+std::enable_if_t< has_cbegin_cend_v<T>, void>
+print_ip(const T& val) {
+    bool is_first = true;
+    for (auto it = val.cbegin(); it != val.cend(); ++it) {
+        std::cout << (is_first ? "" : ".") << *it;
+        is_first = false;
+    }
+    if (!is_first)
+        std::cout << std::endl;
+}
+
+template<typename T, typename... Ts>
+constexpr bool all_types_are_same = std::conjunction_v<std::is_same<T, Ts>...>;
+
+static_assert(all_types_are_same<int, int, int>);
+static_assert(!all_types_are_same<int, int&, int>);
+
+template<typename T, typename... Args>
+std::enable_if_t<all_types_are_same<T, Args...>, void>
+print_ip(const std::tuple<T, Args...>& t) {
+    std::apply([](const auto&... args) {
+        std::size_t n{0};
+        ((std::cout << args << (++n != sizeof...(args) ? "." : "")), ...);
+        std::cout << std::endl;
+    }, t);
+}
+void print_ip(const std::tuple<>&) {}
+
 int main(int, char **) {
-    std::cout << "Test std::map<int, int, MyAllocator>\n";
-    allocate_count = deallocate_count = 0;
-    test_std_map();
-    // std::cout << "allocate_count=" << allocate_count << " deallocate_count=" << deallocate_count << std::endl;
-    assert(allocate_count == 35 && deallocate_count == 35);
-    std::cout << "Test std::map<int, int, MyAllocator>: PASS!\n";
-
-    std::cout << "Test std::forward_list<int, MyAllocator>\n";
-    allocate_count = deallocate_count = 0;
-    test_std_forward_list();
-    assert(allocate_count == 20 && deallocate_count == 20);
-    std::cout << "Test std::forward_list<int, MyAllocator>: PASS!\n";
-
-    std::cout << "Test std::list<int, MyAllocator>\n";
-    allocate_count = deallocate_count = 0;
-    test_std_list();
-    assert(allocate_count == 20 && deallocate_count == 20);
-    std::cout << "Test std::list<int, MyAllocator>: PASS!\n";
-
-    std::cout << "Test MyForwardList<int, std::allocator>\n";
-    allocate_count = deallocate_count = 0;
-    test_myforwadrd_list<std::allocator<int>>();
-    assert(allocate_count == 0 && deallocate_count == 0);
-    std::cout << "Test MyForwardList<int, std::allocator>: PASS\n";
-
-    std::cout << "Test MyForwardList<int, MyAllocator>\n";
-    test_myforwadrd_list<MyAllocator<int>>();
-    assert(allocate_count == 20 && deallocate_count == 20);
-    std::cout << "Test MyForwardList<int, MyAllocator>: PASS\n";
+    print_ip( int8_t{-1} ); // 255 
+    print_ip( int16_t{0} ); // 0.0
+    print_ip( int32_t{2130706433} ); // 127.0.0.1 
+    print_ip( int64_t{8875824491850138409} );  // 123.45.67.89.101.112.131.41 
+    print_ip( std::string{"Hello, World!"} ); // Hello, World! 
+    print_ip( std::vector<int>{100, 200, 300, 400} ); // 100.200.300.400 
+    print_ip( std::list<short>{400, 300, 200, 100} ); // 400.300.200.100 
+    print_ip( std::make_tuple(123, 456, 789, 0) ); // 123.456.789.0
 }
