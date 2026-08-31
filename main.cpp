@@ -14,7 +14,7 @@
 #include <cassert>
 #include <climits>
 
-/* 
+/** 
  * @brief Перегрузка функции print_ip для целочисленных типов.
  * Каждый октет целочисленного типа будет выведен отдельно в десятичном виде, октеты разделяются символом '.'
  * @tparam Любой целочисленный тип. Можно использоать как беззнаковые, так и знаковые типы. При выводе знаковых типов каждый октет итерпретируется как беззнаковый.
@@ -34,7 +34,7 @@ print_ip(const T val) {
     std::cout << std::endl;
 }
 
-/* 
+/** 
  * @brief Вспомогательная шаблонная структура has_cbegin_cend для проверки существования методов cbegin() и cend() для переданного типа.
  * Вариант по умолчанию - std::false_type указывает для SFINAE о том, что тип не удовлентворяет условию.
  * @tparam Любой тип
@@ -42,7 +42,7 @@ print_ip(const T val) {
  */
 template<typename T, typename = void>
 struct has_cbegin_cend : std::false_type {};
-/* 
+/** 
  * @brief Вспомогательная шаблонная структура has_cbegin_cend для проверки существования методов cbegin() и cend() для переданного типа.
  * Специализация для has_cbegin_cend, проверяющая наличие методов cbegin() и cend().
  * @tparam Контейнерный тип, удовлетворяющий условию отбора по SFINAE (см.выше).
@@ -53,7 +53,7 @@ struct has_cbegin_cend<T, std::void_t<
     decltype(std::declval<T>().cbegin()),
     decltype(std::declval<T>().cend())
 >> : std::true_type {};
-/* 
+/** 
  * @brief Шаблон вспомогательной переменной, упрощающей использование has_cbegin_cend
  * @tparam Любой тип
  * @return Возвращает has_cbegin_cend<T>::value
@@ -65,7 +65,7 @@ static_assert(has_cbegin_cend_v<std::vector<int>>, "Has cbegin/cend");
 static_assert(has_cbegin_cend_v<std::list<int>>, "Has cbegin/cend");
 static_assert(!has_cbegin_cend_v<int>, "int doesn't have cbegin/cend");
 
-/* 
+/** 
  * @brief Перегрузка функции print_ip для конрейнерных типов, поддерживающих константные итераторы (методы cbegin() и cend()). Например: std::vector, std::list, ...
  * Каждый элемент контейнера выводится отдельно как есть. При выводе элементы контейнера разделяются символом '.'
  * @tparam Контейнерный тип, удовлетворяющий условию отбора по SFINAE.
@@ -85,7 +85,7 @@ print_ip(const T& val) {
         std::cout << std::endl;
 }
 
-/* 
+/** 
  * @brief Вспомогательное константное значение all_types_are_same типа bool, вычисляемое на этапе компиляции.
  * true - Если все шаблонные параметры имеют один и тот же тип, иначе - false.
  * Может испльзоваться, например, для проверки типов составляющих std::tuple.
@@ -98,7 +98,7 @@ constexpr bool all_types_are_same = std::conjunction_v<std::is_same<T, Ts>...>;
 static_assert(all_types_are_same<int, int, int>);
 static_assert(!all_types_are_same<int, int&, int>);
 
-/* 
+/** 
  * @brief Перегрузка функции print_ip для не пустого std::tuple с произвольным набором элементов.
  * Каждый элемент кортежа выводится отдельно как есть. При выводе элементы кортежа разделяются символом '.'
  * @tparam Не пустой std::tuple.
@@ -116,7 +116,7 @@ print_ip(const std::tuple<T, Args...>& t) {
     }, t);
 }
 
-/* 
+/** 
  * @brief Перегрузка функции print_ip для пустого std::tuple<>.
  * Ничего не делается. Используется как заглушка, для предотвращения ошибок компилятора при печате пустого кортежа.
  * @tparam Пустой std::tuple.
@@ -128,7 +128,7 @@ template<typename... Args>
 std::enable_if_t<sizeof...(Args) == 0, void>
 print_ip(const std::tuple<Args...>&) { std::cout << "Empty std::tuple" << std::endl; }
 
-/* 
+/** 
  * @brief Перегрузка шаблонной функции print_ip для std::string.
  * std::string выводится как есть.
  * @param Константная ссылка на std::string.
