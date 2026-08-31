@@ -1,3 +1,9 @@
+/**
+ * @file main.cpp
+ * @brief Главный файл проекта.
+ * @details Здесь содержатся перегруженные шаблонные функции для работы с данными.
+ */
+
 #include <iostream>
 #include <string>
 #include <vector>
