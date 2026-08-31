@@ -118,26 +118,33 @@ Include dependency graph for main.cpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhas__cbegin__cend.html">has_cbegin_cend&lt; T, typename &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вспомогательная шаблонная структура <a class="el" href="structhas__cbegin__cend.html" title="Вспомогательная шаблонная структура has_cbegin_cend для проверки существования методов cbegin() и cen...">has_cbegin_cend</a> для проверки существования методов cbegin() и cend() для переданного типа. Вариант по умолчанию - std::false_type указывает для SFINAE о том, что тип не удовлентворяет условию.  <a href="structhas__cbegin__cend.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhas__cbegin__cend_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1declval_3_01T_01_4_07_08d0b879454d7734b9e5b0b3b35e2c4e21.html">has_cbegin_cend&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().cbegin()), decltype(std::declval&lt; T &gt;().cend())&gt; &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вспомогательная шаблонная структура <a class="el" href="structhas__cbegin__cend.html" title="Вспомогательная шаблонная структура has_cbegin_cend для проверки существования методов cbegin() и cen...">has_cbegin_cend</a> для проверки существования методов cbegin() и cend() для переданного типа. Специализация для <a class="el" href="structhas__cbegin__cend.html" title="Вспомогательная шаблонная структура has_cbegin_cend для проверки существования методов cbegin() и cen...">has_cbegin_cend</a>, проверяющая наличие методов cbegin() и cend().  <a href="structhas__cbegin__cend_3_01T_00_01std_1_1void__t_3_01decltype_07std_1_1declval_3_01T_01_4_07_08d0b879454d7734b9e5b0b3b35e2c4e21.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a6c4501a9fa406b3620ed370b74a13ad9" id="r_a6c4501a9fa406b3620ed370b74a13ad9"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a6c4501a9fa406b3620ed370b74a13ad9"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; std::is_integral_v&lt; T &gt;, void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a6c4501a9fa406b3620ed370b74a13ad9">print_ip</a> (const T val)</td></tr>
+<tr class="memdesc:a6c4501a9fa406b3620ed370b74a13ad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Перегрузка функции print_ip для целочисленных типов. Каждый октет целочисленного типа будет выведен отдельно в десятичном виде, октеты разделяются символом '.'.  <br /></td></tr>
 <tr class="separator:a6c4501a9fa406b3620ed370b74a13ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d81e6a1606578473e426dc06a8f650e" id="r_a5d81e6a1606578473e426dc06a8f650e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a5d81e6a1606578473e426dc06a8f650e"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; <a class="el" href="main_8cpp.html#a8b8108dd548284fd5de6f081f0e60393">has_cbegin_cend_v</a>&lt; T &gt;, void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a5d81e6a1606578473e426dc06a8f650e">print_ip</a> (const T &amp;val)</td></tr>
+<tr class="memdesc:a5d81e6a1606578473e426dc06a8f650e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Перегрузка функции print_ip для конрейнерных типов, поддерживающих константные итераторы (методы cbegin() и cend()). Например: std::vector, std::list, ... Каждый элемент контейнера выводится отдельно как есть. При выводе элементы контейнера разделяются символом '.'.  <br /></td></tr>
 <tr class="separator:a5d81e6a1606578473e426dc06a8f650e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2ec2f7698a1aebaec56a6f7d69adeea7" id="r_a2ec2f7698a1aebaec56a6f7d69adeea7"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Args&gt; </td></tr>
 <tr class="memitem:a2ec2f7698a1aebaec56a6f7d69adeea7"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; <a class="el" href="main_8cpp.html#aaaafffd4fac3966a3f39f6765412bcbf">all_types_are_same</a>&lt; T, Args... &gt;, void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a2ec2f7698a1aebaec56a6f7d69adeea7">print_ip</a> (const std::tuple&lt; T, Args... &gt; &amp;t)</td></tr>
+<tr class="memdesc:a2ec2f7698a1aebaec56a6f7d69adeea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Перегрузка функции print_ip для не пустого std::tuple с произвольным набором элементов. Каждый элемент кортежа выводится отдельно как есть. При выводе элементы кортежа разделяются символом '.'.  <br /></td></tr>
 <tr class="separator:a2ec2f7698a1aebaec56a6f7d69adeea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6ab293e0d90b8e2057ae2eb614ffbf4" id="r_ab6ab293e0d90b8e2057ae2eb614ffbf4"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:ab6ab293e0d90b8e2057ae2eb614ffbf4"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; sizeof...(Args)==0, void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab6ab293e0d90b8e2057ae2eb614ffbf4">print_ip</a> (const std::tuple&lt; Args... &gt; &amp;)</td></tr>
+<tr class="memdesc:ab6ab293e0d90b8e2057ae2eb614ffbf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Перегрузка функции print_ip для пустого std::tuple&lt;&gt;. Ничего не делается. Используется как заглушка, для предотвращения ошибок компилятора при печате пустого кортежа.  <br /></td></tr>
 <tr class="separator:ab6ab293e0d90b8e2057ae2eb614ffbf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ff8b9787c9c27631a909dc128956cd2" id="r_a0ff8b9787c9c27631a909dc128956cd2"><td class="memItemLeft" align="right" valign="top">template&lt;&gt; </td></tr>
 <tr class="memitem:a0ff8b9787c9c27631a909dc128956cd2"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0ff8b9787c9c27631a909dc128956cd2">print_ip&lt; std::string &gt;</a> (const std::string &amp;val)</td></tr>
+<tr class="memdesc:a0ff8b9787c9c27631a909dc128956cd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Перегрузка шаблонной функции print_ip для std::string. std::string выводится как есть.  <br /></td></tr>
 <tr class="separator:a0ff8b9787c9c27631a909dc128956cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c3f6775325c30275d11c6abee2db6a0" id="r_a2c3f6775325c30275d11c6abee2db6a0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a2c3f6775325c30275d11c6abee2db6a0">main</a> (int, char **)</td></tr>
 <tr class="separator:a2c3f6775325c30275d11c6abee2db6a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,9 +153,11 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:a8b8108dd548284fd5de6f081f0e60393" id="r_a8b8108dd548284fd5de6f081f0e60393"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a8b8108dd548284fd5de6f081f0e60393"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a8b8108dd548284fd5de6f081f0e60393">has_cbegin_cend_v</a> = <a class="el" href="structhas__cbegin__cend.html">has_cbegin_cend</a>&lt;T&gt;::value</td></tr>
+<tr class="memdesc:a8b8108dd548284fd5de6f081f0e60393"><td class="mdescLeft">&#160;</td><td class="mdescRight">Шаблон вспомогательной переменной, упрощающей использование <a class="el" href="structhas__cbegin__cend.html" title="Вспомогательная шаблонная структура has_cbegin_cend для проверки существования методов cbegin() и cen...">has_cbegin_cend</a>.  <br /></td></tr>
 <tr class="separator:a8b8108dd548284fd5de6f081f0e60393"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaaafffd4fac3966a3f39f6765412bcbf" id="r_aaaafffd4fac3966a3f39f6765412bcbf"><td class="memTemplParams" colspan="2">template&lt;typename T , typename... Ts&gt; </td></tr>
 <tr class="memitem:aaaafffd4fac3966a3f39f6765412bcbf"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aaaafffd4fac3966a3f39f6765412bcbf">all_types_are_same</a> = std::conjunction_v&lt;std::is_same&lt;T, Ts&gt;...&gt;</td></tr>
+<tr class="memdesc:aaaafffd4fac3966a3f39f6765412bcbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вспомогательное константное значение all_types_are_same типа bool, вычисляемое на этапе компиляции. true - Если все шаблонные параметры имеют один и тот же тип, иначе - false. Может испльзоваться, например, для проверки типов составляющих std::tuple.  <br /></td></tr>
 <tr class="separator:aaaafffd4fac3966a3f39f6765412bcbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -201,6 +210,27 @@ template&lt;typename... Args&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Перегрузка функции print_ip для пустого std::tuple&lt;&gt;. Ничего не делается. Используется как заглушка, для предотвращения ошибок компилятора при печате пустого кортежа. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Пустой</td><td>std::tuple. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Константная</td><td>ссылка на кортеж. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Нет </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Нет</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a2ec2f7698a1aebaec56a6f7d69adeea7" name="a2ec2f7698a1aebaec56a6f7d69adeea7"></a>
@@ -220,6 +250,27 @@ template&lt;typename T , typename... Args&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Перегрузка функции print_ip для не пустого std::tuple с произвольным набором элементов. Каждый элемент кортежа выводится отдельно как есть. При выводе элементы кортежа разделяются символом '.'. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Не</td><td>пустой std::tuple. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Константная</td><td>ссылка на кортеж. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Нет </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Исключения</td><td>генерируемые std::cout </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -241,6 +292,27 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Перегрузка функции print_ip для конрейнерных типов, поддерживающих константные итераторы (методы cbegin() и cend()). Например: std::vector, std::list, ... Каждый элемент контейнера выводится отдельно как есть. При выводе элементы контейнера разделяются символом '.'. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Контейнерный</td><td>тип, удовлетворяющий условию отбора по SFINAE. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Константная</td><td>ссылка на контейнер. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Нет </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Исключения</td><td>генерируемые std::cout </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a6c4501a9fa406b3620ed370b74a13ad9" name="a6c4501a9fa406b3620ed370b74a13ad9"></a>
@@ -261,6 +333,27 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Перегрузка функции print_ip для целочисленных типов. Каждый октет целочисленного типа будет выведен отдельно в десятичном виде, октеты разделяются символом '.'. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Любой</td><td>целочисленный тип. Можно использоать как беззнаковые, так и знаковые типы. При выводе знаковых типов каждый октет итерпретируется как беззнаковый. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Целое</td><td>число для вывода. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Нет </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Исключения</td><td>генерируемые std::cout </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a0ff8b9787c9c27631a909dc128956cd2" name="a0ff8b9787c9c27631a909dc128956cd2"></a>
@@ -280,6 +373,21 @@ template&lt;&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Перегрузка шаблонной функции print_ip для std::string. std::string выводится как есть. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Константная</td><td>ссылка на std::string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Нет </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">Исключения</td><td>генерируемые std::cout </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -306,6 +414,14 @@ template&lt;typename T , typename... Ts&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Вспомогательное константное значение all_types_are_same типа bool, вычисляемое на этапе компиляции. true - Если все шаблонные параметры имеют один и тот же тип, иначе - false. Может испльзоваться, например, для проверки типов составляющих std::tuple. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Произвольный</td><td>набор типов. @See <a href="https://cppreference.com/cpp/types/conjunction">https://cppreference.com/cpp/types/conjunction</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a8b8108dd548284fd5de6f081f0e60393" name="a8b8108dd548284fd5de6f081f0e60393"></a>
@@ -329,6 +445,15 @@ template&lt;typename T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Шаблон вспомогательной переменной, упрощающей использование <a class="el" href="structhas__cbegin__cend.html" title="Вспомогательная шаблонная структура has_cbegin_cend для проверки существования методов cbegin() и cen...">has_cbegin_cend</a>. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Любой</td><td>тип </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Возвращает has_cbegin_cend&lt;T&gt;::value </dd></dl>
 
 </div>
 </div>

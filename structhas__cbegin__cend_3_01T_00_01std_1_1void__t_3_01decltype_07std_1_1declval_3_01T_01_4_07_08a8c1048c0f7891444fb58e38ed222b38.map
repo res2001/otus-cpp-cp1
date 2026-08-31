@@ -1,5 +1,5 @@
 <map id="has_cbegin_cend&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().cbegin()), decltype(std::declval&lt; T &gt;().cend())&gt; &gt;" name="has_cbegin_cend&lt; T, std::void_t&lt; decltype(std::declval&lt; T &gt;().cbegin()), decltype(std::declval&lt; T &gt;().cend())&gt; &gt;">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,79,203,163"/>
+<area shape="rect" id="Node000001" title="Вспомогательная шаблонная структура has_cbegin_cend для проверки существования методов cbegin() и cen..." alt="" coords="5,79,203,163"/>
 <area shape="rect" id="Node000002" title=" " alt="" coords="48,5,160,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,44,107,79,101,79,101,44"/>
 </map>
