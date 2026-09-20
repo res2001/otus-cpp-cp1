@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['boost_5fauto_5ftest_5fcase_0',['BOOST_AUTO_TEST_CASE',['../test__version_8cpp.html#a5a8f1e117b104260d857ed534915b417',1,'test_version.cpp']]]
+  ['addobserver_0',['addObserver',['../classDocumentModel.html#ae56d64e54407fee31c249de03c64e287',1,'DocumentModel']]],
+  ['addprimitive_1',['addPrimitive',['../classDocumentModel.html#adead268686ee2b79bd8d4b0d9e006224',1,'DocumentModel']]]
 ];

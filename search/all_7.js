@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['otus_20c_20profession_20labs_20doxygen_20documentation_0',['OTUS C++ Profession Labs doxygen documentation',['../index.html',1,'']]]
+  ['importfromfile_0',['importFromFile',['../classDocumentModel.html#af1faedd320f0da0b963e442142efd652',1,'DocumentModel']]],
+  ['iobserver_1',['IObserver',['../classIObserver.html',1,'']]],
+  ['ioutputcontext_2',['IOutputContext',['../structIOutputContext.html',1,'']]]
 ];
