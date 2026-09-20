@@ -1,153 +1,326 @@
 /**
  * @file main.cpp
- * @brief Главный файл проекта.
- * @details Здесь содержатся перегруженные шаблонные функции для работы с данными.
+ * @brief Макет графического редактора на чистом C++ с использованием паттерна MVC.
  */
 
+#include "mvc.h"
 #include <iostream>
-#include <string>
 #include <vector>
-#include <list>
-#include <tuple>
-#include <type_traits>
-#include <cstdint>
-#include <cassert>
-#include <climits>
+#include <string>
+#include <algorithm>
 
-/** 
- * @brief Перегрузка функции print_ip для целочисленных типов.
- * Каждый октет целочисленного типа будет выведен отдельно в десятичном виде, октеты разделяются символом '.'
- * @tparam Любой целочисленный тип. Можно использоать как беззнаковые, так и знаковые типы. При выводе знаковых типов каждый октет итерпретируется как беззнаковый.
- * @param Целое число для вывода.
- * @return Нет
- * @throws Исключения генерируемые std::cout
+/**
+ * @class DocumentModel
+ * @brief Модель (Model). Хранит имя документа и вектор примитивов сцены. Не зависит от View и Controller.
  */
-template<typename T>
-std::enable_if_t< std::is_integral_v<T>, void>
-print_ip(const T val) {
-    for (uint32_t i = 0; i < sizeof(val) ; ++i) {
-        const uint64_t shift = (sizeof(val) - i - 1)  * CHAR_BIT;
-        const T mask = static_cast<T>(0xFFLLU << shift);
-        const uint16_t cur_octet = static_cast<uint16_t>(static_cast<uint8_t>((val & mask) >> shift));
-        std::cout << (i == 0 ? "" : ".") << cur_octet;
+class DocumentModel {
+private:
+    std::string m_documentName;                         ///< Имя текущего открытого документа
+    std::vector<std::unique_ptr<Shape>> m_primitives;   ///< Контейнер, владеющий фигурами сцены
+    std::vector<IObserver*> m_observers;                ///< Список зарегистрированных наблюдателей (представлений)
+
+    /**
+     * @brief Оповещает все зарегистрированные View об изменениях данных.
+     */
+    void notifyObservers() {
+        for (auto* observer : m_observers) {
+            if (observer) observer->onModelChanged();
+        }
     }
-    std::cout << std::endl;
-}
 
-/** 
- * @brief Вспомогательная шаблонная структура has_cbegin_cend для проверки существования методов cbegin() и cend() для переданного типа.
- * Вариант по умолчанию - std::false_type указывает для SFINAE о том, что тип не удовлентворяет условию.
- * @tparam Любой тип
- * @return Определяется переменная член структуры value, содержащее значение false
- */
-template<typename T, typename = void>
-struct has_cbegin_cend : std::false_type {};
-/** 
- * @brief Вспомогательная шаблонная структура has_cbegin_cend для проверки существования методов cbegin() и cend() для переданного типа.
- * Специализация для has_cbegin_cend, проверяющая наличие методов cbegin() и cend().
- * @tparam Контейнерный тип, удовлетворяющий условию отбора по SFINAE (см.выше).
- * @return Определяется переменная член структуры value, содержащее значение true в случае выполнения условия.
- */
-template<typename T>
-struct has_cbegin_cend<T, std::void_t<
-    decltype(std::declval<T>().cbegin()),
-    decltype(std::declval<T>().cend())
->> : std::true_type {};
-/** 
- * @brief Шаблон вспомогательной переменной, упрощающей использование has_cbegin_cend
- * @tparam Любой тип
- * @return Возвращает has_cbegin_cend<T>::value
- */
-template<typename T>
-inline constexpr bool has_cbegin_cend_v = has_cbegin_cend<T>::value;
+public:
+    /**
+     * @brief Регистрирует новый объект View в качестве наблюдателя.
+     * @param observer Указатель на объект интерфейса IObserver.
+     */
+    void addObserver(IObserver* observer) { m_observers.push_back(observer); }
 
-static_assert(has_cbegin_cend_v<std::vector<int>>, "Has cbegin/cend");
-static_assert(has_cbegin_cend_v<std::list<int>>, "Has cbegin/cend");
-static_assert(!has_cbegin_cend_v<int>, "int doesn't have cbegin/cend");
-
-/** 
- * @brief Перегрузка функции print_ip для конрейнерных типов, поддерживающих константные итераторы (методы cbegin() и cend()). Например: std::vector, std::list, ...
- * Каждый элемент контейнера выводится отдельно как есть. При выводе элементы контейнера разделяются символом '.'
- * @tparam Контейнерный тип, удовлетворяющий условию отбора по SFINAE.
- * @param Константная ссылка на контейнер.
- * @return Нет
- * @throws Исключения генерируемые std::cout
- */
-template <typename T>
-std::enable_if_t< has_cbegin_cend_v<T>, void>
-print_ip(const T& val) {
-    bool is_first = true;
-    for (auto it = val.cbegin(); it != val.cend(); ++it) {
-        std::cout << (is_first ? "" : ".") << *it;
-        is_first = false;
+    /**
+     * @brief Метод бизнес-логики: Сброс сцены и создание нового документа.
+     */
+    void createNewDocument() {
+        m_documentName = "Untitled.drw"; 
+        m_primitives.clear();
+        std::cout << "[Model] Данные сброшены.\n";
+        notifyObservers();
     }
-    if (!is_first)
-        std::cout << std::endl;
-}
 
-/** 
- * @brief Вспомогательное константное значение all_types_are_same типа bool, вычисляемое на этапе компиляции.
- * true - Если все шаблонные параметры имеют один и тот же тип, иначе - false.
- * Может испльзоваться, например, для проверки типов составляющих std::tuple.
- * @tparam Произвольный набор типов.
- * @See https://cppreference.com/cpp/types/conjunction
+    /**
+     * @brief Метод бизнес-логики: Загрузка (импорт) данных из файла на диске.
+     * @param filename Путь к файлу.
+     */
+    void importFromFile(const std::string& filename) {
+        m_documentName = filename; 
+        m_primitives.clear();
+        /* Эмитируем наличие в файле некоторых фигур */
+        m_primitives.push_back(ShapeFactory::createShape<ShapeType::Circle>(Point{20, 20}, 10, Color::Red));
+        m_primitives.push_back(ShapeFactory::createShape<ShapeType::Rectangle>(Point{0, 0}, 10, 10, Color::Blue));
+
+        std::cout << "[Model] Импортирован файл: " << filename << "\n";
+        notifyObservers();
+    }
+
+    /**
+     * @brief Метод бизнес-логики: Сохранение (экспорт) данных в файл на диске.
+     * @param filename Путь к файлу.
+     */
+    void exportToFile(const std::string& filename) {
+        m_documentName = filename;
+        /* Тут как-будто происходит экспорт в файл */
+        std::cout << "[Model] Экспорт в файл: '" << m_documentName << "\n";
+    }
+
+    /**
+     * @brief Метод бизнес-логики: Добавление графической фигуры на сцену.
+     * @param shape Умный указатель std::unique_ptr с передачей владения фигурой.
+     */
+    void addPrimitive(std::unique_ptr<Shape> shape) {
+        m_primitives.push_back(std::move(shape));
+        notifyObservers();
+    }
+    
+    /**
+     * @brief Метод бизнес-логики: Удаление графической фигуры со сцены по индексу.* 
+     * @param index Порядковый номер фигуры в векторе.
+     */
+    void deletePrimitive(size_t index) {
+        if (index < m_primitives.size()) {
+            m_primitives.erase(m_primitives.begin() + index);
+            notifyObservers();
+        } else {
+            std::cerr << "[Model] Ошибка: Индекс (" << index << ") не существует.\n";
+        }
+    }
+
+    std::string getDocumentName() { return m_documentName; }
+    const std::string getDocumentName() const { return m_documentName; }
+    std::vector<std::unique_ptr<Shape>>& getPrimitives() { return m_primitives; }
+    const std::vector<std::unique_ptr<Shape>>& getPrimitives() const { return m_primitives; }
+};
+
+/**
+ * @class DocumentController
+ * @brief Контроллер (Controller). Принимает запросы от View, валидирует или преобразует их в вызовы бизнес-логики Модели.
  */
-template<typename T, typename... Ts>
-constexpr bool all_types_are_same = std::conjunction_v<std::is_same<T, Ts>...>;
+class DocumentController {
+private:
+    DocumentModel& m_model; ///< Ссылка на управляемую модель
+public:
+    /**@brief Конструктор контроллера.
+     * @param model Ссылка на объект Модели.
+     */
+    explicit DocumentController(DocumentModel& model) : m_model(model) {}
+    /// Обработчик запроса на создание документа
+    void handleNewDocument() { m_model.createNewDocument(); }
+    /// Обработчик запроса на импорт файла
+    void handleImport(const std::string& path) { m_model.importFromFile(path); }
+    /// Обработчик запроса на экспорт файла
+    void handleExport(const std::string& path) { m_model.exportToFile(path); }
+    /// Обработчик запроса на удаление фигуры
+    void handleDeletePrimitive(size_t index) { m_model.deletePrimitive(index); }
+    /**
+     * @brief Шаблонный метод для добавления фигуры.
+     * @tparam Type Тип добавляемой фигуры из перечисления ShapeType.
+     * @param args Специфичные аргументы геометрии и цвета для фабрики.
+     */
+    template <ShapeType Type, typename... Args>
+    void handleAddPrimitive(Args&&... args) {
+        // Контроллер делегирует создание строго типизированного объекта шаблонной фабрике
+        auto newShape = ShapeFactory::createShape<Type>(std::forward<Args>(args)...);
+        if (newShape) {
+            m_model.addPrimitive(std::move(newShape));
+        }
+    }
+};
 
-static_assert(all_types_are_same<int, int, int>);
-static_assert(!all_types_are_same<int, int&, int>);
-
-/** 
- * @brief Перегрузка функции print_ip для не пустого std::tuple с произвольным набором элементов.
- * Каждый элемент кортежа выводится отдельно как есть. При выводе элементы кортежа разделяются символом '.'
- * @tparam Не пустой std::tuple.
- * @param Константная ссылка на кортеж.
- * @return Нет
- * @throws Исключения генерируемые std::cout
+/**
+ * @class ConsoleGraphicsContext
+ * @brief Конкретная реализация графического контекста, имитирующая рендеринг через вывод текстовых сообщений.
  */
-template<typename T, typename... Args>
-std::enable_if_t<all_types_are_same<T, Args...>, void>
-print_ip(const std::tuple<T, Args...>& t) {
-    std::apply([](const auto&... args) {
-        std::size_t n{0};
-        ((std::cout << args << (++n != sizeof...(args) ? "." : "")), ...);
-        std::cout << std::endl;
-    }, t);
-}
+struct ConsoleContext : public IOutputContext {
+public:
+    void drawRect(const Point topLeft, int w, int h, Color color) override {
+        std::cout << "[Рендер] Прямоугольник (Цвет: " << ColorRegistry::to_string(color) 
+                  << ", Координаты левого верхнего угла: (" << topLeft.x << ", " << topLeft.y 
+                  << "), Размер: " << w << "x" << h << ")";
+    }
+    void drawCircle(Point center, int r, Color color) override {
+        std::cout << "[Рендер] Круг (Цвет: " << ColorRegistry::to_string(color) 
+                  << ", Центр: (" << center.x << ", " << center.y 
+                  << "), Радиус: " << r << ")";
+    }
+    void drawTriangle(Point p1, Point p2, Point p3, Color color) override {
+        std::cout << "[Рендер] Треугольник (Цвет: " << ColorRegistry::to_string(color) 
+                  << ", Вершины: P1(" << p1.x << ", " << p1.y << "), "
+                  << "P2(" << p2.x << ", " << p2.y << "), "
+                  << "P3(" << p3.x << ", " << p3.y << ")";
+    }
+};
 
-/** 
- * @brief Перегрузка функции print_ip для пустого std::tuple<>.
- * Ничего не делается. Используется как заглушка, для предотвращения ошибок компилятора при печате пустого кортежа.
- * @tparam Пустой std::tuple.
- * @param Константная ссылка на кортеж.
- * @return Нет
- * @throws Нет
+/**
+ * @class DocumentView
+ * @brief Представление (View). Отвечает за рендеринг Модели и сбор пользовательского ввода (Интерактивное меню).
  */
-template<typename... Args>
-std::enable_if_t<sizeof...(Args) == 0, void>
-print_ip(const std::tuple<Args...>&) { std::cout << "Empty std::tuple" << std::endl; }
+class ConsoleView : public IObserver {
+private:
+    const DocumentModel& m_model;               ///< Ссылка на модель для чтения актуальных данных
+    DocumentController& m_controller;           ///< Ссылка на контроллер для отправки пользовательских действий
+    ConsoleContext m_context;                   ///< Контекст (холст) для отрисовки фигур
 
-/** 
- * @brief Перегрузка шаблонной функции print_ip для std::string.
- * std::string выводится как есть.
- * @param Константная ссылка на std::string.
- * @return Нет
- * @throws Исключения генерируемые std::cout
- */
-template<>
-void print_ip<std::string>(const std::string& val) {
-    std::cout << val << std::endl;
-}
+    std::string InputFileName(const std::string msg) {
+        std::string filename;
+        std::cout << msg << ": ";
+        std::cin >> filename;
+        return filename;
+    }
 
-int main(int, char **) {
-    print_ip( int8_t{-1} ); // 255 
-    print_ip( int16_t{0} ); // 0.0
-    print_ip( int32_t{2130706433} ); // 127.0.0.1 
-    print_ip( int64_t{8875824491850138409} );  // 123.45.67.89.101.112.131.41 
-    print_ip( std::string{"Hello, World!"} ); // Hello, World! 
-    print_ip( std::vector<int>{100, 200, 300, 400} ); // 100.200.300.400 
-    print_ip( std::list<short>{400, 300, 200, 100} ); // 400.300.200.100 
-    print_ip( std::make_tuple(123, 456, 789, 0) ); // 123.456.789.0
-    // print_ip( std::make_tuple() );
+    void InputPoint(Point& p, std::string msg) {
+        std::cout << msg << ": ";
+        std::cin >> p.x >> p.y;
+    }
+
+    void InputRectangle(Color color) {
+        Point tl{};
+        int width = 0, height = 0;
+        InputPoint(tl, "Координаты левого верхнего угла прямоугольника x и y (через пробел)");
+        std::cout << "Ширина: "; std::cin >> width;
+        std::cout << "Высота: "; std::cin >> height;
+        m_controller.handleAddPrimitive<ShapeType::Rectangle>(tl, width, height, color);
+    }
+
+    void InputTriangle(Color color) {
+        std::array<Point, 3> p{};
+        for (size_t i = 0; i < p.size(); ++i) {
+            InputPoint(p[i], std::string("Координаты точки ") + std::to_string(i + 1) + "(через пробел)");
+        }
+        m_controller.handleAddPrimitive<ShapeType::Triangle>(p[0], p[1], p[2], color);
+    }
+
+    void InputCircle(Color color) {
+        Point center{};
+        int radius = 0;
+        InputPoint(center, "Координаты центра окружности (через пробел): ");
+        std::cout << "Радиус: "; std::cin >> radius;
+        m_controller.handleAddPrimitive<ShapeType::Circle>(center, radius, color);
+    }
+
+public:
+    /**
+     * @brief Конструктор Представления.
+     * @param model Ссылка на объект Модели.
+     * @param controller Ссылка на объект Контроллера.
+     */
+    ConsoleView(const DocumentModel& model, DocumentController& controller)
+    : m_model(model), m_controller(controller), m_context() {}
+    /**
+     * @brief Реализация интерфейса IObserver. Очищает и заново "отрисовывает" сцену в консоли при изменении данных.
+     */
+    void onModelChanged() override {
+        std::cout << "\n================= [ConsoleView] =================\n";
+        std::cout << "  Файл: " << m_model.getDocumentName() << "\n";
+        std::cout << "  Элементы сцены:\n";
+        const auto& primitives = m_model.getPrimitives();
+        if (primitives.empty()) {
+            std::cout << "    (пусто)\n";
+        } else {
+            for (size_t i = 0; i < primitives.size(); ++i) {
+                std::cout << "    [" << i << "] ";
+                primitives[i]->Draw(m_context);
+                std::cout << "\n";
+            }
+        }
+        std::cout << "============================================================\n\n";
+    }
+    /**
+     * @brief Главный интерактивный текстовый цикл меню. Захватывает ввод пользователя.
+     */
+    void runMenuLoop() {
+        int choice = 0;
+        while (true) {
+            std::cout << "--- МЕНЮ ---\n";
+            std::cout << "1. Создать документ\n";
+            std::cout << "2. Импортировать из файла\n";
+            std::cout << "3. Экспортировать в файл\n";
+            std::cout << "4. Добавить прямоугольник\n";
+            std::cout << "5. Добавить окружность\n";
+            std::cout << "6. Добавить треугольник\n";
+            std::cout << "7. Удалить фигуру\n";
+            std::cout << "0. Закрыть приложение\n";
+            std::cout << "Выберите действие и нажмите Enter (0-7): ";
+
+            if (!(std::cin >> choice)) {
+                std::cin.clear(); 
+                std::cin.ignore(10000, '\n');
+                std::cout << "Ошибка ввода.\n\n";
+                continue;
+            }
+
+            switch (choice)
+            {
+            case 0:
+                return;
+
+            case 1:
+                m_controller.handleNewDocument();
+                break;
+            
+            case 2:
+                m_controller.handleImport(InputFileName("Имя файла для импорта"));
+                break;
+            case 3:
+                m_controller.handleImport(InputFileName("Имя файла для экспорта"));
+                break;
+
+            case 4:
+            case 5:
+            case 6: {
+                uint32_t color = 0;
+                std::cout << "Введите параметры фигуры:\n";
+                std::cout << "Цвет заливки (0-Красный, 1-Зеленый, 2-Синий, 3-Белый, 4-Черный): ";
+                std::cin >> color;
+                if (color >= ColorRegistry::getColorCount()) {
+                    std::cout << "Неверный цвет. Установлен Черный по умолчанию.\n";
+                    color = static_cast<int>(Color::Black);
+                }
+                switch(static_cast<ShapeType>(choice - 3))
+                {
+                case ShapeType::Rectangle:
+                    InputRectangle(static_cast<Color>(color));
+                    break;
+                case ShapeType::Circle:
+                    InputCircle(static_cast<Color>(color));
+                    break;
+                case ShapeType::Triangle:
+                    InputTriangle(static_cast<Color>(color));
+                    break;
+                default:
+                    std::cerr << "Unknown shape type: " << choice - 3 << "\n";
+                    std::abort();
+                }
+                break;
+            }
+
+            case 7: {
+                size_t index = 0;
+                std::cout << "Индекс для удаления: "; std::cin >> index;
+                m_controller.handleDeletePrimitive(index);
+                break;
+            }
+
+            default:
+                std::cerr << "Неверная команда.\n\n";
+                break;
+            }
+        }
+    }
+};
+
+int main() {
+    DocumentModel model;
+    DocumentController controller(model);
+    ConsoleView view(model, controller);
+    model.addObserver(& view);
+    controller.handleNewDocument();
+    view.runMenuLoop();
+    return 0;
 }
