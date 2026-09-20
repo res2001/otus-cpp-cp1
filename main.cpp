@@ -125,7 +125,6 @@ public:
      */
     template <ShapeType Type, typename... Args>
     void handleAddPrimitive(Args&&... args) {
-        // Контроллер делегирует создание строго типизированного объекта шаблонной фабрике
         auto newShape = ShapeFactory::createShape<Type>(std::forward<Args>(args)...);
         if (newShape) {
             m_model.addPrimitive(std::move(newShape));
