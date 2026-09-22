@@ -68,6 +68,7 @@ public:
         m_documentName = filename;
         /* Тут как-будто происходит экспорт в файл */
         std::cout << "[Model] Экспорт в файл: '" << m_documentName << "\n";
+        notifyObservers();
     }
 
     /**
@@ -92,9 +93,7 @@ public:
         }
     }
 
-    std::string getDocumentName() { return m_documentName; }
-    const std::string getDocumentName() const { return m_documentName; }
-    std::vector<std::unique_ptr<Shape>>& getPrimitives() { return m_primitives; }
+    const std::string& getDocumentName() const { return m_documentName; }
     const std::vector<std::unique_ptr<Shape>>& getPrimitives() const { return m_primitives; }
 };
 
@@ -166,14 +165,14 @@ private:
     DocumentController& m_controller;           ///< Ссылка на контроллер для отправки пользовательских действий
     ConsoleContext m_context;                   ///< Контекст (холст) для отрисовки фигур
 
-    std::string InputFileName(const std::string msg) {
+    std::string InputFileName(const std::string_view msg) {
         std::string filename;
         std::cout << msg << ": ";
         std::cin >> filename;
         return filename;
     }
 
-    void InputPoint(Point& p, std::string msg) {
+    void InputPoint(Point& p, std::string_view msg) {
         std::cout << msg << ": ";
         std::cin >> p.x >> p.y;
     }
@@ -190,7 +189,7 @@ private:
     void InputTriangle(Color color) {
         std::array<Point, 3> p{};
         for (size_t i = 0; i < p.size(); ++i) {
-            InputPoint(p[i], std::string("Координаты точки ") + std::to_string(i + 1) + "(через пробел)");
+            InputPoint(p[i], std::string("Координаты точки ") + std::to_string(i + 1) + " (через пробел)");
         }
         m_controller.handleAddPrimitive<ShapeType::Triangle>(p[0], p[1], p[2], color);
     }
@@ -198,7 +197,7 @@ private:
     void InputCircle(Color color) {
         Point center{};
         int radius = 0;
-        InputPoint(center, "Координаты центра окружности (через пробел): ");
+        InputPoint(center, "Координаты центра окружности (через пробел)");
         std::cout << "Радиус: "; std::cin >> radius;
         m_controller.handleAddPrimitive<ShapeType::Circle>(center, radius, color);
     }
@@ -267,7 +266,7 @@ public:
                 m_controller.handleImport(InputFileName("Имя файла для импорта"));
                 break;
             case 3:
-                m_controller.handleImport(InputFileName("Имя файла для экспорта"));
+                m_controller.handleExport(InputFileName("Имя файла для экспорта"));
                 break;
 
             case 4:
