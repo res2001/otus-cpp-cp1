@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['name_0',['name',['../structColorMapEntry.html#a3497d9e18826728db19bb0d1258371b7',1,'ColorMapEntry']]]
+  ['value_0',['value',['../classmatrix_1_1ElementImpl.html#acf2da2a496c39839d32e4308a657de3d',1,'matrix::ElementImpl']]]
 ];

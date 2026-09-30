@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['onmodelchanged_0',['onmodelchanged',['../classIObserver.html#a6ffb8355c5aeaa397fd1db4767e51dfb',1,'IObserver::onModelChanged()'],['../classConsoleView.html#a5970a7457539ee27cdb82381553fae5f',1,'ConsoleView::onModelChanged()']]]
+  ['print_5fmatrix_0',['print_matrix',['../main_8cpp.html#a1aa1a2949284eec3476bb0ed679aa540',1,'main.cpp']]]
 ];
