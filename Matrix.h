@@ -7,13 +7,14 @@
 #include <algorithm>
 #include <optional>
 #include <type_traits>
-#include <initializer_list>
+#include <tuple>
 #include <cassert>
 #include "hash_mix.h"
 
 namespace matrix {
 
-template <size_t Dim, size_t MatrixMaxDimension = 128, typename = std::enable_if_t<(Dim > 0 && Dim <= MatrixMaxDimension)>>
+template <size_t Dim, size_t MatrixMaxDimension = 128, 
+        typename = std::enable_if_t<(Dim > 0 && Dim <= MatrixMaxDimension)>>
 struct MatrixIndex
 {
     static constexpr size_t BAD_IDX = SIZE_MAX;
@@ -32,8 +33,9 @@ struct MatrixIndex
     std::string to_string() const
     {
         std::stringstream ss;
+        ss << "[";
         std::for_each(index_arr.cbegin(), index_arr.cbegin() + (Dim - 1), [&ss](base_type idx) { ss << idx << ", "; });
-        ss << index_arr[Dim - 1];
+        ss << index_arr[Dim - 1] << "]";
         return ss.str();
     }
 
@@ -62,10 +64,10 @@ struct MatrixIndex
         }
     };
 
+    const key_type& GetRaw() const noexcept { return index_arr; }
+
 private:
     friend class MatrixIndexHash;
-    const key_type& GetRaw() noexcept { return index_arr; }
-
     key_type index_arr;
 };
 
@@ -77,21 +79,24 @@ struct MatrixType {
     using Map = std::unordered_map<Key, T, Hash>;
 };
 
-template<typename T, size_t Dim, bool isConst>
-class MatrixSquareBracketsFirst;
-template<typename T, size_t Dim> class Matrix;
 
-template <typename T, size_t Dim, bool isConst>
+template<typename T, size_t Dim, typename Default, bool isConst>
+class MatrixSquareBracketsFirst;
+template<typename T, size_t Dim, typename Default>
+class Matrix;
+
+
+template <typename T, size_t Dim, typename Default, bool isConst>
 class ElementProxyImpl {
     using MapT = typename MatrixType<T, Dim>::Map;
     using MapType = std::conditional_t<isConst, const MapT, MapT>;
     using TType = typename std::conditional_t<isConst, const T, T>;
     using Key = typename MatrixType<T, Dim>::Key;
 
-    template<typename, size_t, bool, size_t, typename>
+    template<typename, size_t, typename, bool, size_t, typename>
     friend class MatrixSquareBracketsNext;
-    friend class MatrixSquareBracketsFirst<T, Dim, isConst>;
-    friend class Matrix<T, Dim>;
+    friend class MatrixSquareBracketsFirst<T, Dim, Default, isConst>;
+    friend class Matrix<T, Dim, Default>;
 
     MapType& m;
     Key key;
@@ -102,7 +107,7 @@ public:
     template<bool C = isConst> 
     std::enable_if_t<!C, ElementProxyImpl&>
     operator=(const T& val) {
-        if (val == T{}) {
+        if (val == Default{}()) {
             m.erase(key);
         } else {
             m[key] = val;
@@ -112,7 +117,7 @@ public:
 
     template<bool C = isConst, typename = std::enable_if_t<!C, void>>
     ElementProxyImpl& operator=(T&& val) {
-        if (val == T{}) {
+        if (val == Default{}()) {
             m.erase(key);
         } else {
             m[key] = std::move(val);
@@ -124,14 +129,14 @@ public:
         auto it = m.find(key);
         if (it != m.end())
             return it->second;
-        return T{};
+        return Default{}();
     }
 
     const Key& get_key() const noexcept { return key; }
 };
 
 
-template<typename T, size_t Dim, bool isConst, size_t cur_dim, typename = std::enable_if_t<(cur_dim >= 1 && cur_dim < (Dim - 1)), void> >
+template<typename T, size_t Dim, typename Default, bool isConst, size_t cur_dim, typename = std::enable_if_t<(cur_dim >= 1 && cur_dim < (Dim - 1)), void> >
 class MatrixSquareBracketsNext {
     using MapT = typename MatrixType<T, Dim>::Map;
     using MapType = std::conditional_t<isConst, const MapT, MapT>;
@@ -148,17 +153,17 @@ public:
     auto operator[](typename Key::base_type cur_idx) {
         assert(cur_idx != Key::BAD_IDX);
         if constexpr ((cur_dim + 1) < (Dim - 1)) {
-            return MatrixSquareBracketsNext<T, Dim, isConst, cur_dim + 1>(m, key, cur_idx);
+            return MatrixSquareBracketsNext<T, Dim, Default, isConst, cur_dim + 1>(m, key, cur_idx);
         } else {
             key.Set(cur_dim + 1, cur_idx);
             assert(key.isValid());
-            return ElementProxyImpl<T, Dim, isConst>(m, key);
+            return ElementProxyImpl<T, Dim, Default, isConst>(m, key);
         }
     }
 };
 
 
-template <typename T, size_t Dim, bool isConst>
+template <typename T, size_t Dim, typename Default, bool isConst>
 class MatrixSquareBracketsFirst {
     using MapT = typename MatrixType<T, Dim>::Map;
     using MapType = std::conditional_t<isConst, const MapT, MapT>;
@@ -177,29 +182,72 @@ public:
     auto operator[](typename Key::base_type cur_idx) {
         assert(cur_idx != Key::BAD_IDX);
         if constexpr (Dim > 2) {
-            return MatrixSquareBracketsNext<T, Dim, isConst, 1>(m, key, cur_idx);
+            return MatrixSquareBracketsNext<T, Dim, Default, isConst, 1>(m, key, cur_idx);
         } else {
             key.Set(1, cur_idx);
             assert(key.isValid());
-            return ElementProxyImpl<T, Dim, isConst>(m, key);
+            return ElementProxyImpl<T, Dim, Default, isConst>(m, key);
         }
     }
 };
 
 template<typename T, size_t Dim, bool isConst>
-class MatrixIteratorImpl;
+struct ElementImpl;
+
+} /* matrix */
+
+namespace std {
+    // 1. Говорим, что ElementImpl раскладывается на Dim + 1 элементов
+    template <typename T, size_t Dim, bool IsConst>
+    struct tuple_size<matrix::ElementImpl<T, Dim, IsConst>> 
+        : std::integral_constant<size_t, Dim + 1> {};
+
+    // 2. Описываем типы каждого элемента
+    template <size_t I, typename T, size_t Dim, bool IsConst>
+    struct tuple_element<I, matrix::ElementImpl<T, Dim, IsConst>> {
+        using type = std::conditional_t<
+            (I < Dim),
+            const size_t&, // Индексы возвращаем по значению
+            std::conditional_t<IsConst, const T&, T&> // Значение — по ссылке
+        >;
+    };
+}
+
+namespace matrix {
 
 template<typename T, size_t Dim, bool isConst>
 class ElementImpl {
+    template <size_t... Is>
+    static auto make_tuple_type(std::index_sequence<Is...>) -> std::tuple<
+        std::conditional_t<(Is >= 0), size_t, size_t>..., 
+        std::conditional_t<isConst, const T&, T&>
+    >;
+public:
     using TType = std::conditional_t<isConst, const T, T>;
     using Key = typename MatrixType<T, Dim>::Key;
-    friend class MatrixIteratorImpl<T, Dim, isConst>;
-    ElementImpl() = default;
-public:
+    using TupleType = decltype(make_tuple_type(std::make_index_sequence<Dim>{}));
+
     const Key& indices;
     TType& value;
-};
 
+    template <size_t I>
+    decltype(auto) get() const {
+        static_assert(I <= Dim, "Index out of range!");
+        if constexpr (I < Dim) {
+            return indices.GetRaw()[I];
+        } else {
+            return (value);
+        }
+    }    
+
+    template <typename... Args, typename = std::enable_if_t<sizeof...(Args) == Dim + 1>>
+    operator std::tuple<Args...>() const {        
+        typename Key::key_type mutable_indices = indices.GetRaw(); 
+        return std::apply([this](auto... args) {
+            return std::tuple<Args...>{ args..., value };
+        }, mutable_indices);
+    }
+};
 
 template<typename T, size_t Dim, bool isConst>
 class MatrixIteratorImpl {
@@ -219,7 +267,7 @@ public:
 
     reference operator*() const
     { reset_cache_element(); return *element_cache; }
-    pointer operator->() const noexcept
+    pointer operator->() const
     { reset_cache_element(); return &*element_cache; }
 
     Self& operator++() noexcept { ++it; return *this; }
@@ -234,22 +282,24 @@ public:
 
 private:
     void reset_cache_element() const {
-        element_cache.emplace(ReturnType{ it->first, it->second });
+        element_cache.emplace(ReturnType{it->first, it->second});
     }
 
     MapIteratorType it;
     mutable std::optional<ReturnType> element_cache;
 };
 
+template <typename T>
+struct MatrixDefaultGenerator {
+    constexpr T operator()() const { return T{}; }
+};
 
-template<typename T, size_t Dim = 2>
+template<typename T, size_t Dim = 2, typename Default = MatrixDefaultGenerator<T>>
 class Matrix {
 public:
     using Key = typename MatrixType<T, Dim>::Key;
     using Hash = typename MatrixType<T, Dim>::Hash;
     using Map = typename MatrixType<T, Dim>::Map;
-    using Element = ElementImpl<T, Dim, false>;
-    using ElementConst = ElementImpl<T, Dim, true>;
     using MatrixIterator = MatrixIteratorImpl<T, Dim, false>;
     using MatrixIteratorConst = MatrixIteratorImpl<T, Dim, true>;
 
@@ -258,9 +308,9 @@ public:
         if constexpr (Dim == 1) {
             Key key;
             key.Set(0, cur_idx);
-            return ElementProxyImpl<T, Dim, false>(map_, key);
+            return ElementProxyImpl<T, Dim, Default, false>(map_, key);
         } else {
-            return MatrixSquareBracketsFirst<T, Dim, false>(map_, cur_idx);
+            return MatrixSquareBracketsFirst<T, Dim, Default, false>(map_, cur_idx);
         }
     }
 
@@ -269,9 +319,9 @@ public:
         if constexpr (Dim == 1) {
             Key key;
             key.Set(0, cur_idx);
-            return ElementProxyImpl<T, Dim, true>(map_, key);
+            return ElementProxyImpl<T, Dim, Default, true>(map_, key);
         } else {
-            return MatrixSquareBracketsFirst<T, Dim, true>(map_, cur_idx);
+            return MatrixSquareBracketsFirst<T, Dim, Default, true>(map_, cur_idx);
         }
     }
 
@@ -287,11 +337,11 @@ public:
         assert(key.isValid());
         return map_.find(key) != map_.end();
     }
-    T find(const Key& key) noexcept {
+    auto find(const Key& key) noexcept {
         assert(key.isValid());
         return MatrixIterator(map_.find(key));
     }
-    const T find(const Key& key) const noexcept {
+    const auto find(const Key& key) const noexcept {
         assert(key.isValid());
         return MatrixIteratorConst(map_.find(key));
     }
@@ -301,9 +351,10 @@ public:
     }
 
     size_t get_dimensions() const noexcept { return Dim; }
+    static Default get_default_value() { return Default{}; }
 
 private:
     Map map_;
 };
 
-}
+} /* matrix */
