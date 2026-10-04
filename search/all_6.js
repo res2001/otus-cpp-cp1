@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['hash_0',['hash',['../namespacehash.html',1,'hash'],['../structmatrix_1_1MatrixType.html#a8165083cc421c812bc8af14e284891c9',1,'matrix::MatrixType::Hash'],['../classmatrix_1_1Matrix.html#a10559c742f9311a7c1dc5b6c61d73e3c',1,'matrix::Matrix::Hash']]],
+  ['hash_0',['hash',['../namespacehash.html',1,'hash'],['../structmatrix_1_1MatrixType.html#a8165083cc421c812bc8af14e284891c9',1,'matrix::MatrixType::Hash'],['../classmatrix_1_1Matrix.html#ae287ee43849d7b7ff115f8b6ed180161',1,'matrix::Matrix::Hash']]],
   ['hash_3a_3adetail_1',['detail',['../namespacehash_1_1detail.html',1,'hash']]],
   ['hash_5fcombine_2',['hash_combine',['../namespacehash.html#ab0c3366c3e0628acbc11538108003ca1',1,'hash']]],
   ['hash_5fmix_3',['hash_mix',['../namespacehash_1_1detail.html#a4c73c7508c7ac01ad51314f1c442e97e',1,'hash::detail']]],

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>OTUS C++ Profesional Lab: matrix::Matrix&lt; T, Dim &gt; Class Template Reference</title>
+<title>OTUS C++ Profesional Lab: matrix::Matrix&lt; T, Dim, Default &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -76,8 +76,9 @@ $(function() {
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classmatrix_1_1Matrix-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">matrix::Matrix&lt; T, Dim &gt; Class Template Reference</div></div>
+  <div class="headertitle"><div class="title">matrix::Matrix&lt; T, Dim, Default &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -85,159 +86,128 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a3922a05c484619665183af042945536c" id="r_a3922a05c484619665183af042945536c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a3922a05c484619665183af042945536c">Key</a> = typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt; T, Dim &gt;::Key</td></tr>
-<tr class="separator:a3922a05c484619665183af042945536c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a10559c742f9311a7c1dc5b6c61d73e3c" id="r_a10559c742f9311a7c1dc5b6c61d73e3c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a10559c742f9311a7c1dc5b6c61d73e3c">Hash</a> = typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt; T, Dim &gt;::Hash</td></tr>
-<tr class="separator:a10559c742f9311a7c1dc5b6c61d73e3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6062b290b4129fe7dd67d1aa73026d1" id="r_ab6062b290b4129fe7dd67d1aa73026d1"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#ab6062b290b4129fe7dd67d1aa73026d1">Map</a> = typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt; T, Dim &gt;::Map</td></tr>
-<tr class="separator:ab6062b290b4129fe7dd67d1aa73026d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9059472a79e6eb3347cc038086789737" id="r_a9059472a79e6eb3347cc038086789737"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a9059472a79e6eb3347cc038086789737">Element</a> = <a class="el" href="classmatrix_1_1ElementImpl.html">ElementImpl</a>&lt; T, Dim, false &gt;</td></tr>
-<tr class="separator:a9059472a79e6eb3347cc038086789737"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab57b102336a3a45cc369f11441aaf2fc" id="r_ab57b102336a3a45cc369f11441aaf2fc"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#ab57b102336a3a45cc369f11441aaf2fc">ElementConst</a> = <a class="el" href="classmatrix_1_1ElementImpl.html">ElementImpl</a>&lt; T, Dim, true &gt;</td></tr>
-<tr class="separator:ab57b102336a3a45cc369f11441aaf2fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a1d9cb36ca4ee82e27974af7ecc72c5" id="r_a7a1d9cb36ca4ee82e27974af7ecc72c5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a7a1d9cb36ca4ee82e27974af7ecc72c5">MatrixIterator</a> = <a class="el" href="classmatrix_1_1MatrixIteratorImpl.html">MatrixIteratorImpl</a>&lt; T, Dim, false &gt;</td></tr>
-<tr class="separator:a7a1d9cb36ca4ee82e27974af7ecc72c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1ca48bfa855d7c559d56c42a417414ed" id="r_a1ca48bfa855d7c559d56c42a417414ed"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a1ca48bfa855d7c559d56c42a417414ed">MatrixIteratorConst</a> = <a class="el" href="classmatrix_1_1MatrixIteratorImpl.html">MatrixIteratorImpl</a>&lt; T, Dim, true &gt;</td></tr>
-<tr class="separator:a1ca48bfa855d7c559d56c42a417414ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07a21633154498b61b081a344890b9b3" id="r_a07a21633154498b61b081a344890b9b3"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a07a21633154498b61b081a344890b9b3">Key</a> = typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt; T, Dim &gt;::Key</td></tr>
+<tr class="separator:a07a21633154498b61b081a344890b9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae287ee43849d7b7ff115f8b6ed180161" id="r_ae287ee43849d7b7ff115f8b6ed180161"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#ae287ee43849d7b7ff115f8b6ed180161">Hash</a> = typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt; T, Dim &gt;::Hash</td></tr>
+<tr class="separator:ae287ee43849d7b7ff115f8b6ed180161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a924cb51c8238d5cc36097856c45cf55f" id="r_a924cb51c8238d5cc36097856c45cf55f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a924cb51c8238d5cc36097856c45cf55f">Map</a> = typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt; T, Dim &gt;::Map</td></tr>
+<tr class="separator:a924cb51c8238d5cc36097856c45cf55f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fdf3c291925f61553e5caa0b703783d" id="r_a3fdf3c291925f61553e5caa0b703783d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a3fdf3c291925f61553e5caa0b703783d">MatrixIterator</a> = <a class="el" href="classmatrix_1_1MatrixIteratorImpl.html">MatrixIteratorImpl</a>&lt; T, Dim, false &gt;</td></tr>
+<tr class="separator:a3fdf3c291925f61553e5caa0b703783d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addf79ad5cacca82d70920d539e362d95" id="r_addf79ad5cacca82d70920d539e362d95"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#addf79ad5cacca82d70920d539e362d95">MatrixIteratorConst</a> = <a class="el" href="classmatrix_1_1MatrixIteratorImpl.html">MatrixIteratorImpl</a>&lt; T, Dim, true &gt;</td></tr>
+<tr class="separator:addf79ad5cacca82d70920d539e362d95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad49faa7df9de0f21ab35c2c94a18e105" id="r_ad49faa7df9de0f21ab35c2c94a18e105"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#ad49faa7df9de0f21ab35c2c94a18e105">operator[]</a> (typename Key::base_type cur_idx)</td></tr>
-<tr class="separator:ad49faa7df9de0f21ab35c2c94a18e105"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26cd737c814da06d69e7a58c7cc648b8" id="r_a26cd737c814da06d69e7a58c7cc648b8"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a26cd737c814da06d69e7a58c7cc648b8">operator[]</a> (typename Key::base_type cur_idx) const</td></tr>
-<tr class="separator:a26cd737c814da06d69e7a58c7cc648b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a039e7faf155f646bf2be9386d5c76e" id="r_a4a039e7faf155f646bf2be9386d5c76e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#a7a1d9cb36ca4ee82e27974af7ecc72c5">MatrixIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a4a039e7faf155f646bf2be9386d5c76e">begin</a> () noexcept</td></tr>
-<tr class="separator:a4a039e7faf155f646bf2be9386d5c76e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9efcb0c4e45e23c31ef69ae469d3319" id="r_af9efcb0c4e45e23c31ef69ae469d3319"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#a7a1d9cb36ca4ee82e27974af7ecc72c5">MatrixIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#af9efcb0c4e45e23c31ef69ae469d3319">end</a> () noexcept</td></tr>
-<tr class="separator:af9efcb0c4e45e23c31ef69ae469d3319"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7b5594234aab70028006024aab65408" id="r_ac7b5594234aab70028006024aab65408"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#a1ca48bfa855d7c559d56c42a417414ed">MatrixIteratorConst</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#ac7b5594234aab70028006024aab65408">begin</a> () const noexcept</td></tr>
-<tr class="separator:ac7b5594234aab70028006024aab65408"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3acb192b71df6049ffde4f122b6a2b2f" id="r_a3acb192b71df6049ffde4f122b6a2b2f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#a1ca48bfa855d7c559d56c42a417414ed">MatrixIteratorConst</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a3acb192b71df6049ffde4f122b6a2b2f">end</a> () const noexcept</td></tr>
-<tr class="separator:a3acb192b71df6049ffde4f122b6a2b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbcbdd32d1d5a0cfb0de5b94ce7dcef0" id="r_adbcbdd32d1d5a0cfb0de5b94ce7dcef0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#a1ca48bfa855d7c559d56c42a417414ed">MatrixIteratorConst</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#adbcbdd32d1d5a0cfb0de5b94ce7dcef0">cbegin</a> () const noexcept</td></tr>
-<tr class="separator:adbcbdd32d1d5a0cfb0de5b94ce7dcef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3df8f40940f1cf5aabe27ce0ed4666f" id="r_ad3df8f40940f1cf5aabe27ce0ed4666f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#a1ca48bfa855d7c559d56c42a417414ed">MatrixIteratorConst</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#ad3df8f40940f1cf5aabe27ce0ed4666f">cend</a> () const noexcept</td></tr>
-<tr class="separator:ad3df8f40940f1cf5aabe27ce0ed4666f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02be8b6e16bcd4a3d548b483bbb0c623" id="r_a02be8b6e16bcd4a3d548b483bbb0c623"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a02be8b6e16bcd4a3d548b483bbb0c623">size</a> () const noexcept</td></tr>
-<tr class="separator:a02be8b6e16bcd4a3d548b483bbb0c623"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87be8d6f01c63074fd12d8e24b054752" id="r_a87be8d6f01c63074fd12d8e24b054752"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a87be8d6f01c63074fd12d8e24b054752">contains</a> (const <a class="el" href="classmatrix_1_1Matrix.html#a3922a05c484619665183af042945536c">Key</a> &amp;key) const noexcept</td></tr>
-<tr class="separator:a87be8d6f01c63074fd12d8e24b054752"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1628318539b6bd7b32b1b05703755d19" id="r_a1628318539b6bd7b32b1b05703755d19"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a1628318539b6bd7b32b1b05703755d19">find</a> (const <a class="el" href="classmatrix_1_1Matrix.html#a3922a05c484619665183af042945536c">Key</a> &amp;key) noexcept</td></tr>
-<tr class="separator:a1628318539b6bd7b32b1b05703755d19"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a209b705ebcb2393355314e3f630fa775" id="r_a209b705ebcb2393355314e3f630fa775"><td class="memItemLeft" align="right" valign="top">const T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a209b705ebcb2393355314e3f630fa775">find</a> (const <a class="el" href="classmatrix_1_1Matrix.html#a3922a05c484619665183af042945536c">Key</a> &amp;key) const noexcept</td></tr>
-<tr class="separator:a209b705ebcb2393355314e3f630fa775"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab69b577ea5dce776a35953dff262a9de" id="r_ab69b577ea5dce776a35953dff262a9de"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#ab69b577ea5dce776a35953dff262a9de">erase</a> (const <a class="el" href="classmatrix_1_1Matrix.html#a3922a05c484619665183af042945536c">Key</a> &amp;key) noexcept</td></tr>
-<tr class="separator:ab69b577ea5dce776a35953dff262a9de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad23ce9c058bc583d3afbd8c980d43eda" id="r_ad23ce9c058bc583d3afbd8c980d43eda"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#ad23ce9c058bc583d3afbd8c980d43eda">get_dimensions</a> () const noexcept</td></tr>
-<tr class="separator:ad23ce9c058bc583d3afbd8c980d43eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27ba50e234abb572ee895ecfef9e9c05" id="r_a27ba50e234abb572ee895ecfef9e9c05"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a27ba50e234abb572ee895ecfef9e9c05">operator[]</a> (typename Key::base_type cur_idx)</td></tr>
+<tr class="separator:a27ba50e234abb572ee895ecfef9e9c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3295dadd52fa6af2e7bfd6af5b38f091" id="r_a3295dadd52fa6af2e7bfd6af5b38f091"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a3295dadd52fa6af2e7bfd6af5b38f091">operator[]</a> (typename Key::base_type cur_idx) const</td></tr>
+<tr class="separator:a3295dadd52fa6af2e7bfd6af5b38f091"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd5f58b2777e0e3de8fe859889487bc4" id="r_abd5f58b2777e0e3de8fe859889487bc4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#a3fdf3c291925f61553e5caa0b703783d">MatrixIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#abd5f58b2777e0e3de8fe859889487bc4">begin</a> () noexcept</td></tr>
+<tr class="separator:abd5f58b2777e0e3de8fe859889487bc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2db5b4a5be7dfb00713faf24e6baceef" id="r_a2db5b4a5be7dfb00713faf24e6baceef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#a3fdf3c291925f61553e5caa0b703783d">MatrixIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a2db5b4a5be7dfb00713faf24e6baceef">end</a> () noexcept</td></tr>
+<tr class="separator:a2db5b4a5be7dfb00713faf24e6baceef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ada83818b2dc3f6ee1599d3ba85bbc4" id="r_a3ada83818b2dc3f6ee1599d3ba85bbc4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#addf79ad5cacca82d70920d539e362d95">MatrixIteratorConst</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a3ada83818b2dc3f6ee1599d3ba85bbc4">begin</a> () const noexcept</td></tr>
+<tr class="separator:a3ada83818b2dc3f6ee1599d3ba85bbc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33517dc9615c399879e727b397fbe862" id="r_a33517dc9615c399879e727b397fbe862"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#addf79ad5cacca82d70920d539e362d95">MatrixIteratorConst</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a33517dc9615c399879e727b397fbe862">end</a> () const noexcept</td></tr>
+<tr class="separator:a33517dc9615c399879e727b397fbe862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f4ef196efec406b49e40fa61898cb4c" id="r_a9f4ef196efec406b49e40fa61898cb4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#addf79ad5cacca82d70920d539e362d95">MatrixIteratorConst</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a9f4ef196efec406b49e40fa61898cb4c">cbegin</a> () const noexcept</td></tr>
+<tr class="separator:a9f4ef196efec406b49e40fa61898cb4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76424891b908917d3e367ea3dfa83da7" id="r_a76424891b908917d3e367ea3dfa83da7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmatrix_1_1Matrix.html#addf79ad5cacca82d70920d539e362d95">MatrixIteratorConst</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a76424891b908917d3e367ea3dfa83da7">cend</a> () const noexcept</td></tr>
+<tr class="separator:a76424891b908917d3e367ea3dfa83da7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0e74e7f69862c31c487956c91de8ebf" id="r_ab0e74e7f69862c31c487956c91de8ebf"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#ab0e74e7f69862c31c487956c91de8ebf">size</a> () const noexcept</td></tr>
+<tr class="separator:ab0e74e7f69862c31c487956c91de8ebf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a191190003632d3046c821cba40e253fb" id="r_a191190003632d3046c821cba40e253fb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a191190003632d3046c821cba40e253fb">contains</a> (const <a class="el" href="classmatrix_1_1Matrix.html#a07a21633154498b61b081a344890b9b3">Key</a> &amp;key) const noexcept</td></tr>
+<tr class="separator:a191190003632d3046c821cba40e253fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa894337e0614afbd21f4ab063ced6969" id="r_aa894337e0614afbd21f4ab063ced6969"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#aa894337e0614afbd21f4ab063ced6969">find</a> (const <a class="el" href="classmatrix_1_1Matrix.html#a07a21633154498b61b081a344890b9b3">Key</a> &amp;key) noexcept</td></tr>
+<tr class="separator:aa894337e0614afbd21f4ab063ced6969"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c53967f5c4b0f5958868ec918f86688" id="r_a2c53967f5c4b0f5958868ec918f86688"><td class="memItemLeft" align="right" valign="top">const auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a2c53967f5c4b0f5958868ec918f86688">find</a> (const <a class="el" href="classmatrix_1_1Matrix.html#a07a21633154498b61b081a344890b9b3">Key</a> &amp;key) const noexcept</td></tr>
+<tr class="separator:a2c53967f5c4b0f5958868ec918f86688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7553576ca798cc8ac1cabcf9f50de8b0" id="r_a7553576ca798cc8ac1cabcf9f50de8b0"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#a7553576ca798cc8ac1cabcf9f50de8b0">erase</a> (const <a class="el" href="classmatrix_1_1Matrix.html#a07a21633154498b61b081a344890b9b3">Key</a> &amp;key) noexcept</td></tr>
+<tr class="separator:a7553576ca798cc8ac1cabcf9f50de8b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaed1eb8baa95703bc1d3f2f68f8e6684" id="r_aaed1eb8baa95703bc1d3f2f68f8e6684"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#aaed1eb8baa95703bc1d3f2f68f8e6684">get_dimensions</a> () const noexcept</td></tr>
+<tr class="separator:aaed1eb8baa95703bc1d3f2f68f8e6684"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ae43c71648c4432e654af9cf0987de48c" id="r_ae43c71648c4432e654af9cf0987de48c"><td class="memItemLeft" align="right" valign="top">static Default&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html#ae43c71648c4432e654af9cf0987de48c">get_default_value</a> ()</td></tr>
+<tr class="separator:ae43c71648c4432e654af9cf0987de48c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a9059472a79e6eb3347cc038086789737" name="a9059472a79e6eb3347cc038086789737"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9059472a79e6eb3347cc038086789737">&#9670;&#160;</a></span>Element</h2>
+<a id="ae287ee43849d7b7ff115f8b6ed180161" name="ae287ee43849d7b7ff115f8b6ed180161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae287ee43849d7b7ff115f8b6ed180161">&#9670;&#160;</a></span>Hash</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::Element =  <a class="el" href="classmatrix_1_1ElementImpl.html">ElementImpl</a>&lt;T, Dim, false&gt;</td>
+          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::Hash =  typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt;T, Dim&gt;::Hash</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ab57b102336a3a45cc369f11441aaf2fc" name="ab57b102336a3a45cc369f11441aaf2fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab57b102336a3a45cc369f11441aaf2fc">&#9670;&#160;</a></span>ElementConst</h2>
+<a id="a07a21633154498b61b081a344890b9b3" name="a07a21633154498b61b081a344890b9b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07a21633154498b61b081a344890b9b3">&#9670;&#160;</a></span>Key</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::ElementConst =  <a class="el" href="classmatrix_1_1ElementImpl.html">ElementImpl</a>&lt;T, Dim, true&gt;</td>
+          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::Key =  typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt;T, Dim&gt;::Key</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a10559c742f9311a7c1dc5b6c61d73e3c" name="a10559c742f9311a7c1dc5b6c61d73e3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a10559c742f9311a7c1dc5b6c61d73e3c">&#9670;&#160;</a></span>Hash</h2>
+<a id="a924cb51c8238d5cc36097856c45cf55f" name="a924cb51c8238d5cc36097856c45cf55f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a924cb51c8238d5cc36097856c45cf55f">&#9670;&#160;</a></span>Map</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::Hash =  typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt;T, Dim&gt;::Hash</td>
+          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::Map =  typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt;T, Dim&gt;::Map</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a3922a05c484619665183af042945536c" name="a3922a05c484619665183af042945536c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3922a05c484619665183af042945536c">&#9670;&#160;</a></span>Key</h2>
+<a id="a3fdf3c291925f61553e5caa0b703783d" name="a3fdf3c291925f61553e5caa0b703783d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fdf3c291925f61553e5caa0b703783d">&#9670;&#160;</a></span>MatrixIterator</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::Key =  typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt;T, Dim&gt;::Key</td>
+          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::MatrixIterator =  <a class="el" href="classmatrix_1_1MatrixIteratorImpl.html">MatrixIteratorImpl</a>&lt;T, Dim, false&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ab6062b290b4129fe7dd67d1aa73026d1" name="ab6062b290b4129fe7dd67d1aa73026d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6062b290b4129fe7dd67d1aa73026d1">&#9670;&#160;</a></span>Map</h2>
+<a id="addf79ad5cacca82d70920d539e362d95" name="addf79ad5cacca82d70920d539e362d95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addf79ad5cacca82d70920d539e362d95">&#9670;&#160;</a></span>MatrixIteratorConst</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::Map =  typename <a class="el" href="structmatrix_1_1MatrixType.html">MatrixType</a>&lt;T, Dim&gt;::Map</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7a1d9cb36ca4ee82e27974af7ecc72c5" name="a7a1d9cb36ca4ee82e27974af7ecc72c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a1d9cb36ca4ee82e27974af7ecc72c5">&#9670;&#160;</a></span>MatrixIterator</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::MatrixIterator =  <a class="el" href="classmatrix_1_1MatrixIteratorImpl.html">MatrixIteratorImpl</a>&lt;T, Dim, false&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1ca48bfa855d7c559d56c42a417414ed" name="a1ca48bfa855d7c559d56c42a417414ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ca48bfa855d7c559d56c42a417414ed">&#9670;&#160;</a></span>MatrixIteratorConst</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::MatrixIteratorConst =  <a class="el" href="classmatrix_1_1MatrixIteratorImpl.html">MatrixIteratorImpl</a>&lt;T, Dim, true&gt;</td>
+          <td class="memname">using <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::MatrixIteratorConst =  <a class="el" href="classmatrix_1_1MatrixIteratorImpl.html">MatrixIteratorImpl</a>&lt;T, Dim, true&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -245,19 +215,19 @@ template&lt;typename T , size_t Dim = 2&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac7b5594234aab70028006024aab65408" name="ac7b5594234aab70028006024aab65408"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7b5594234aab70028006024aab65408">&#9670;&#160;</a></span>begin() <span class="overload">[1/2]</span></h2>
+<a id="a3ada83818b2dc3f6ee1599d3ba85bbc4" name="a3ada83818b2dc3f6ee1599d3ba85bbc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ada83818b2dc3f6ee1599d3ba85bbc4">&#9670;&#160;</a></span>begin() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#a1ca48bfa855d7c559d56c42a417414ed">MatrixIteratorConst</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::begin </td>
+          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#addf79ad5cacca82d70920d539e362d95">MatrixIteratorConst</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -272,155 +242,19 @@ template&lt;typename T , size_t Dim = 2&gt; </div>
 
 </div>
 </div>
-<a id="a4a039e7faf155f646bf2be9386d5c76e" name="a4a039e7faf155f646bf2be9386d5c76e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a039e7faf155f646bf2be9386d5c76e">&#9670;&#160;</a></span>begin() <span class="overload">[2/2]</span></h2>
+<a id="abd5f58b2777e0e3de8fe859889487bc4" name="abd5f58b2777e0e3de8fe859889487bc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd5f58b2777e0e3de8fe859889487bc4">&#9670;&#160;</a></span>begin() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#a7a1d9cb36ca4ee82e27974af7ecc72c5">MatrixIterator</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::begin </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="adbcbdd32d1d5a0cfb0de5b94ce7dcef0" name="adbcbdd32d1d5a0cfb0de5b94ce7dcef0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbcbdd32d1d5a0cfb0de5b94ce7dcef0">&#9670;&#160;</a></span>cbegin()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#a1ca48bfa855d7c559d56c42a417414ed">MatrixIteratorConst</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::cbegin </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad3df8f40940f1cf5aabe27ce0ed4666f" name="ad3df8f40940f1cf5aabe27ce0ed4666f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3df8f40940f1cf5aabe27ce0ed4666f">&#9670;&#160;</a></span>cend()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#a1ca48bfa855d7c559d56c42a417414ed">MatrixIteratorConst</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::cend </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a87be8d6f01c63074fd12d8e24b054752" name="a87be8d6f01c63074fd12d8e24b054752"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87be8d6f01c63074fd12d8e24b054752">&#9670;&#160;</a></span>contains()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::contains </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classmatrix_1_1Matrix.html#a3922a05c484619665183af042945536c">Key</a> &amp;&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3acb192b71df6049ffde4f122b6a2b2f" name="a3acb192b71df6049ffde4f122b6a2b2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3acb192b71df6049ffde4f122b6a2b2f">&#9670;&#160;</a></span>end() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#a1ca48bfa855d7c559d56c42a417414ed">MatrixIteratorConst</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::end </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af9efcb0c4e45e23c31ef69ae469d3319" name="af9efcb0c4e45e23c31ef69ae469d3319"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9efcb0c4e45e23c31ef69ae469d3319">&#9670;&#160;</a></span>end() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#a7a1d9cb36ca4ee82e27974af7ecc72c5">MatrixIterator</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::end </td>
+          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#a3fdf3c291925f61553e5caa0b703783d">MatrixIterator</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::begin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -435,103 +269,19 @@ template&lt;typename T , size_t Dim = 2&gt; </div>
 
 </div>
 </div>
-<a id="ab69b577ea5dce776a35953dff262a9de" name="ab69b577ea5dce776a35953dff262a9de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab69b577ea5dce776a35953dff262a9de">&#9670;&#160;</a></span>erase()</h2>
+<a id="a9f4ef196efec406b49e40fa61898cb4c" name="a9f4ef196efec406b49e40fa61898cb4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f4ef196efec406b49e40fa61898cb4c">&#9670;&#160;</a></span>cbegin()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::erase </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classmatrix_1_1Matrix.html#a3922a05c484619665183af042945536c">Key</a> &amp;&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a209b705ebcb2393355314e3f630fa775" name="a209b705ebcb2393355314e3f630fa775"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a209b705ebcb2393355314e3f630fa775">&#9670;&#160;</a></span>find() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const T <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::find </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classmatrix_1_1Matrix.html#a3922a05c484619665183af042945536c">Key</a> &amp;&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1628318539b6bd7b32b1b05703755d19" name="a1628318539b6bd7b32b1b05703755d19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1628318539b6bd7b32b1b05703755d19">&#9670;&#160;</a></span>find() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">T <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::find </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classmatrix_1_1Matrix.html#a3922a05c484619665183af042945536c">Key</a> &amp;&#160;</td>
-          <td class="paramname"><em>key</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad23ce9c058bc583d3afbd8c980d43eda" name="ad23ce9c058bc583d3afbd8c980d43eda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad23ce9c058bc583d3afbd8c980d43eda">&#9670;&#160;</a></span>get_dimensions()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::get_dimensions </td>
+          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#addf79ad5cacca82d70920d539e362d95">MatrixIteratorConst</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::cbegin </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -546,19 +296,266 @@ template&lt;typename T , size_t Dim = 2&gt; </div>
 
 </div>
 </div>
-<a id="ad49faa7df9de0f21ab35c2c94a18e105" name="ad49faa7df9de0f21ab35c2c94a18e105"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad49faa7df9de0f21ab35c2c94a18e105">&#9670;&#160;</a></span>operator[]() <span class="overload">[1/2]</span></h2>
+<a id="a76424891b908917d3e367ea3dfa83da7" name="a76424891b908917d3e367ea3dfa83da7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76424891b908917d3e367ea3dfa83da7">&#9670;&#160;</a></span>cend()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::operator[] </td>
+          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#addf79ad5cacca82d70920d539e362d95">MatrixIteratorConst</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::cend </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a191190003632d3046c821cba40e253fb" name="a191190003632d3046c821cba40e253fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a191190003632d3046c821cba40e253fb">&#9670;&#160;</a></span>contains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::contains </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmatrix_1_1Matrix.html#a07a21633154498b61b081a344890b9b3">Key</a> &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a33517dc9615c399879e727b397fbe862" name="a33517dc9615c399879e727b397fbe862"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33517dc9615c399879e727b397fbe862">&#9670;&#160;</a></span>end() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#addf79ad5cacca82d70920d539e362d95">MatrixIteratorConst</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2db5b4a5be7dfb00713faf24e6baceef" name="a2db5b4a5be7dfb00713faf24e6baceef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2db5b4a5be7dfb00713faf24e6baceef">&#9670;&#160;</a></span>end() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmatrix_1_1Matrix.html#a3fdf3c291925f61553e5caa0b703783d">MatrixIterator</a> <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::end </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7553576ca798cc8ac1cabcf9f50de8b0" name="a7553576ca798cc8ac1cabcf9f50de8b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7553576ca798cc8ac1cabcf9f50de8b0">&#9670;&#160;</a></span>erase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::erase </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmatrix_1_1Matrix.html#a07a21633154498b61b081a344890b9b3">Key</a> &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2c53967f5c4b0f5958868ec918f86688" name="a2c53967f5c4b0f5958868ec918f86688"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c53967f5c4b0f5958868ec918f86688">&#9670;&#160;</a></span>find() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const auto <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::find </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmatrix_1_1Matrix.html#a07a21633154498b61b081a344890b9b3">Key</a> &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa894337e0614afbd21f4ab063ced6969" name="aa894337e0614afbd21f4ab063ced6969"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa894337e0614afbd21f4ab063ced6969">&#9670;&#160;</a></span>find() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::find </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classmatrix_1_1Matrix.html#a07a21633154498b61b081a344890b9b3">Key</a> &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae43c71648c4432e654af9cf0987de48c" name="ae43c71648c4432e654af9cf0987de48c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae43c71648c4432e654af9cf0987de48c">&#9670;&#160;</a></span>get_default_value()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static Default <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::get_default_value </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaed1eb8baa95703bc1d3f2f68f8e6684" name="aaed1eb8baa95703bc1d3f2f68f8e6684"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaed1eb8baa95703bc1d3f2f68f8e6684">&#9670;&#160;</a></span>get_dimensions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::get_dimensions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a27ba50e234abb572ee895ecfef9e9c05" name="a27ba50e234abb572ee895ecfef9e9c05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27ba50e234abb572ee895ecfef9e9c05">&#9670;&#160;</a></span>operator[]() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">typename Key::base_type&#160;</td>
           <td class="paramname"><em>cur_idx</em></td><td>)</td>
@@ -574,19 +571,19 @@ template&lt;typename T , size_t Dim = 2&gt; </div>
 
 </div>
 </div>
-<a id="a26cd737c814da06d69e7a58c7cc648b8" name="a26cd737c814da06d69e7a58c7cc648b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26cd737c814da06d69e7a58c7cc648b8">&#9670;&#160;</a></span>operator[]() <span class="overload">[2/2]</span></h2>
+<a id="a3295dadd52fa6af2e7bfd6af5b38f091" name="a3295dadd52fa6af2e7bfd6af5b38f091"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3295dadd52fa6af2e7bfd6af5b38f091">&#9670;&#160;</a></span>operator[]() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::operator[] </td>
+          <td class="memname">auto <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype">typename Key::base_type&#160;</td>
           <td class="paramname"><em>cur_idx</em></td><td>)</td>
@@ -602,19 +599,19 @@ template&lt;typename T , size_t Dim = 2&gt; </div>
 
 </div>
 </div>
-<a id="a02be8b6e16bcd4a3d548b483bbb0c623" name="a02be8b6e16bcd4a3d548b483bbb0c623"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02be8b6e16bcd4a3d548b483bbb0c623">&#9670;&#160;</a></span>size()</h2>
+<a id="ab0e74e7f69862c31c487956c91de8ebf" name="ab0e74e7f69862c31c487956c91de8ebf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0e74e7f69862c31c487956c91de8ebf">&#9670;&#160;</a></span>size()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T , size_t Dim = 2&gt; </div>
+template&lt;typename T , size_t Dim = 2, typename Default  = MatrixDefaultGenerator&lt;T&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim &gt;::size </td>
+          <td class="memname">size_t <a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix</a>&lt; T, Dim, Default &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>

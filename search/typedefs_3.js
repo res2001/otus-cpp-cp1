@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['key_0',['key',['../structmatrix_1_1MatrixType.html#ada63828d8f30b0723c2845901b3954c0',1,'matrix::MatrixType::Key'],['../classmatrix_1_1Matrix.html#a3922a05c484619665183af042945536c',1,'matrix::Matrix::Key']]],
-  ['key_5ftype_1',['key_type',['../structmatrix_1_1MatrixIndex.html#acb03d694f520633fa1d1e4d83ecd1bfc',1,'matrix::MatrixIndex']]]
+  ['map_0',['map',['../structmatrix_1_1MatrixType.html#a6115522509fde87c0206ef35e7d42348',1,'matrix::MatrixType::Map'],['../classmatrix_1_1Matrix.html#a924cb51c8238d5cc36097856c45cf55f',1,'matrix::Matrix::Map']]],
+  ['matrixiterator_1',['MatrixIterator',['../classmatrix_1_1Matrix.html#a3fdf3c291925f61553e5caa0b703783d',1,'matrix::Matrix']]],
+  ['matrixiteratorconst_2',['MatrixIteratorConst',['../classmatrix_1_1Matrix.html#addf79ad5cacca82d70920d539e362d95',1,'matrix::Matrix']]]
 ];

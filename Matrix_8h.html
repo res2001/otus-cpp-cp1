@@ -83,7 +83,7 @@ $(function() {
 <code>#include &lt;algorithm&gt;</code><br />
 <code>#include &lt;optional&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
-<code>#include &lt;initializer_list&gt;</code><br />
+<code>#include &lt;tuple&gt;</code><br />
 <code>#include &lt;cassert&gt;</code><br />
 <code>#include &quot;<a class="el" href="hash__mix_8h_source.html">hash_mix.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -92,12 +92,12 @@ Include dependency graph for Matrix.h:</div>
 <div class="center"><img src="Matrix_8h__incl.png" border="0" usemap="#aMatrix_8h" alt=""/></div>
 <map name="aMatrix_8h" id="aMatrix_8h">
 <area shape="rect" title=" " alt="" coords="438,5,514,31"/>
-<area shape="rect" title=" " alt="" coords="384,152,451,177"/>
-<area shape="poly" title=" " alt="" coords="438,24,196,43,75,60,34,70,13,80,8,91,13,102,37,119,74,133,120,144,172,151,280,159,371,161,370,166,280,165,171,156,119,149,72,138,34,124,9,106,3,91,9,77,32,65,74,54,195,38,438,19"/>
+<area shape="rect" title=" " alt="" coords="356,152,423,177"/>
+<area shape="poly" title=" " alt="" coords="438,24,196,43,75,60,34,70,13,80,8,91,13,102,35,118,68,131,158,149,257,158,342,161,342,166,257,163,157,154,67,136,32,123,9,106,3,91,9,77,32,65,74,54,195,38,438,19"/>
 <area shape="rect" title=" " alt="" coords="23,79,79,104"/>
 <area shape="poly" title=" " alt="" coords="439,26,291,46,93,81,92,76,290,41,438,21"/>
 <area shape="rect" title=" " alt="" coords="104,79,228,104"/>
-<area shape="poly" title=" " alt="" coords="439,31,230,78,229,73,438,25"/>
+<area shape="poly" title=" " alt="" coords="439,31,230,78,228,73,438,25"/>
 <area shape="rect" title=" " alt="" coords="252,79,311,104"/>
 <area shape="poly" title=" " alt="" coords="446,33,325,77,323,72,444,28"/>
 <area shape="rect" title=" " alt="" coords="335,79,410,104"/>
@@ -108,19 +108,19 @@ Include dependency graph for Matrix.h:</div>
 <area shape="poly" title=" " alt="" coords="494,28,553,68,550,73,491,33"/>
 <area shape="rect" title=" " alt="" coords="642,79,734,104"/>
 <area shape="poly" title=" " alt="" coords="511,28,642,72,640,77,509,33"/>
-<area shape="rect" title=" " alt="" coords="758,79,869,104"/>
-<area shape="poly" title=" " alt="" coords="515,25,746,73,745,78,514,30"/>
-<area shape="rect" title=" " alt="" coords="894,79,963,104"/>
-<area shape="poly" title=" " alt="" coords="515,21,670,42,880,76,879,81,669,47,514,26"/>
-<area shape="rect" href="hash__mix_8h.html" title=" " alt="" coords="988,79,1085,104"/>
-<area shape="poly" title=" " alt="" coords="515,20,708,41,974,76,974,81,707,46,514,26"/>
-<area shape="poly" title=" " alt="" coords="988,105,975,107,686,142,465,162,464,157,685,136,975,101,987,99"/>
-<area shape="rect" title=" " alt="" coords="908,152,978,177"/>
-<area shape="poly" title=" " alt="" coords="1023,106,971,146,967,141,1020,102"/>
-<area shape="rect" title=" " alt="" coords="1003,152,1070,177"/>
-<area shape="poly" title=" " alt="" coords="1039,104,1039,138,1034,138,1034,104"/>
-<area shape="rect" title=" " alt="" coords="1094,152,1181,177"/>
-<area shape="poly" title=" " alt="" coords="1054,102,1111,142,1108,146,1051,106"/>
+<area shape="rect" title=" " alt="" coords="758,79,813,104"/>
+<area shape="poly" title=" " alt="" coords="515,24,745,76,744,81,514,30"/>
+<area shape="rect" title=" " alt="" coords="838,79,907,104"/>
+<area shape="poly" title=" " alt="" coords="515,22,648,44,824,76,823,81,647,49,514,28"/>
+<area shape="rect" href="hash__mix_8h.html" title=" " alt="" coords="932,79,1029,104"/>
+<area shape="poly" title=" " alt="" coords="515,21,686,43,918,76,918,81,685,48,514,26"/>
+<area shape="poly" title=" " alt="" coords="932,105,919,107,647,141,437,162,437,157,646,136,919,101,931,99"/>
+<area shape="rect" title=" " alt="" coords="852,152,922,177"/>
+<area shape="poly" title=" " alt="" coords="967,106,915,146,911,141,964,102"/>
+<area shape="rect" title=" " alt="" coords="947,152,1014,177"/>
+<area shape="poly" title=" " alt="" coords="983,104,983,138,978,138,978,104"/>
+<area shape="rect" title=" " alt="" coords="1038,152,1125,177"/>
+<area shape="poly" title=" " alt="" coords="998,102,1055,142,1052,146,995,106"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -144,22 +144,30 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmatrix_1_1MatrixType.html">matrix::MatrixType&lt; T, Dim &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1ElementProxyImpl.html">matrix::ElementProxyImpl&lt; T, Dim, isConst &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1ElementProxyImpl.html">matrix::ElementProxyImpl&lt; T, Dim, Default, isConst &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1MatrixSquareBracketsNext.html">matrix::MatrixSquareBracketsNext&lt; T, Dim, isConst, cur_dim, typename &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1MatrixSquareBracketsNext.html">matrix::MatrixSquareBracketsNext&lt; T, Dim, Default, isConst, cur_dim, typename &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1MatrixSquareBracketsFirst.html">matrix::MatrixSquareBracketsFirst&lt; T, Dim, isConst &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1MatrixSquareBracketsFirst.html">matrix::MatrixSquareBracketsFirst&lt; T, Dim, Default, isConst &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1ElementImpl.html">matrix::ElementImpl&lt; T, Dim, isConst &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstd_1_1tuple__size_3_01matrix_1_1ElementImpl_3_01T_00_01Dim_00_01IsConst_01_4_01_4.html">std::tuple_size&lt; matrix::ElementImpl&lt; T, Dim, IsConst &gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structstd_1_1tuple__element_3_01I_00_01matrix_1_1ElementImpl_3_01T_00_01Dim_00_01IsConst_01_4_01_4.html">std::tuple_element&lt; I, matrix::ElementImpl&lt; T, Dim, IsConst &gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmatrix_1_1ElementImpl.html">matrix::ElementImpl&lt; T, Dim, isConst &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1MatrixIteratorImpl.html">matrix::MatrixIteratorImpl&lt; T, Dim, isConst &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix&lt; T, Dim &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmatrix_1_1MatrixDefaultGenerator.html">matrix::MatrixDefaultGenerator&lt; T &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmatrix_1_1Matrix.html">matrix::Matrix&lt; T, Dim, Default &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacematrix" id="r_namespacematrix"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacematrix.html">matrix</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacestd" id="r_namespacestd"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacestd.html">std</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->

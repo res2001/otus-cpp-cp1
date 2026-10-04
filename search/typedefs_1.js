@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['element_0',['Element',['../classmatrix_1_1Matrix.html#a9059472a79e6eb3347cc038086789737',1,'matrix::Matrix']]],
-  ['elementconst_1',['ElementConst',['../classmatrix_1_1Matrix.html#ab57b102336a3a45cc369f11441aaf2fc',1,'matrix::Matrix']]]
+  ['hash_0',['hash',['../structmatrix_1_1MatrixType.html#a8165083cc421c812bc8af14e284891c9',1,'matrix::MatrixType::Hash'],['../classmatrix_1_1Matrix.html#ae287ee43849d7b7ff115f8b6ed180161',1,'matrix::Matrix::Hash']]]
 ];
