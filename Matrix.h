@@ -115,8 +115,9 @@ public:
         return *this;
     }
 
-    template<bool C = isConst, typename = std::enable_if_t<!C, void>>
-    ElementProxyImpl& operator=(T&& val) {
+    template<bool C = isConst>
+    std::enable_if_t<!C, ElementProxyImpl&>
+    operator=(T&& val) {
         if (val == Default{}()) {
             m.erase(key);
         } else {

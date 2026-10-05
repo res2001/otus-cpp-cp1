@@ -66,8 +66,12 @@ int main() {
     {
         std::cout << std::endl << "Unknown element:" << std::endl;
         auto el = mi2[1024][129];
-        std::cout << el.get_key().to_string() << " = " << int(el) << std::endl << std::endl;
+        std::cout << el.get_key().to_string() << " = " << int(el) << std::endl;
     }
+    assert(mi2[100][100] == -1);
+    ((mi2[100][100] = 314) = 0) = 217;
+    assert(mi2[100][100] == 217);
+    std::cout << "Test ((mi2[100][100] = 314) = 0) = 217; is passed" << std::endl << std::endl;
 
     struct MatrixDoubleDefaultGenerator {
         constexpr double operator()() const { return -1.; }
