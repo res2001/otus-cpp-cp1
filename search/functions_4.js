@@ -1,8 +1,4 @@
 var searchData=
 [
-  ['get_0',['get',['../structmatrix_1_1ElementImpl.html#af004fb48068593fc4d2a260e71e489dc',1,'matrix::ElementImpl']]],
-  ['get_5fdefault_5fvalue_1',['get_default_value',['../classmatrix_1_1Matrix.html#ae43c71648c4432e654af9cf0987de48c',1,'matrix::Matrix']]],
-  ['get_5fdimensions_2',['get_dimensions',['../classmatrix_1_1Matrix.html#aaed1eb8baa95703bc1d3f2f68f8e6684',1,'matrix::Matrix']]],
-  ['get_5fkey_3',['get_key',['../classmatrix_1_1ElementProxyImpl.html#abd785b3df825897a6eeb90877ddac968',1,'matrix::ElementProxyImpl']]],
-  ['getraw_4',['GetRaw',['../structmatrix_1_1MatrixIndex.html#a661ccb39a4b4a655219db07209427b48',1,'matrix::MatrixIndex']]]
+  ['handle_0',['handle',['../structIHandle.html#a7775036acac66bc1b0acb1a0c6df1fd1',1,'IHandle::handle()'],['../structCmdConsoleOutput.html#ab06d8243c3eb90de96c4ac689fb7cd9f',1,'CmdConsoleOutput::handle()'],['../structCmdFileOutput.html#adc46a02b62da66fe280195f54d38f2f3',1,'CmdFileOutput::handle()'],['../structChainOfResponsibility.html#ab0420ab5b575428d630530fbf2e65c74',1,'ChainOfResponsibility::handle()']]]
 ];

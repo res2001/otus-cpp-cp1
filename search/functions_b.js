@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['to_5fstring_0',['to_string',['../structmatrix_1_1MatrixIndex.html#ad9b63963e7f14f000c15d96473d7f73b',1,'matrix::MatrixIndex']]]
+  ['_7ecmdconsoleoutput_0',['~CmdConsoleOutput',['../structCmdConsoleOutput.html#a049de749e1af47e7886df0cf9be62872',1,'CmdConsoleOutput']]],
+  ['_7ecmdfileoutput_1',['~CmdFileOutput',['../structCmdFileOutput.html#a6c6cb581b5510e282d652c748b0d610d',1,'CmdFileOutput']]],
+  ['_7eihandle_2',['~IHandle',['../structIHandle.html#a58e4acb3eafebd7bd9e3179ce4f4081f',1,'IHandle']]]
 ];
