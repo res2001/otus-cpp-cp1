@@ -1,99 +1,174 @@
-#include "Matrix.h"
 #include <iostream>
+#include <vector>
+#include <string>
+#include <string_view>
+#include <charconv>
+#include <utility>
+#include <chrono>
+#include <fstream>
+#include <memory>
+#include <cstdlib>
+#include <cstdint>
+#include <cassert>
 
-using namespace matrix;
+struct CommandContainer {
+    using cmd_container = std::vector<std::string>;
 
-template <typename T, size_t Dim, bool IsConst>
-std::ostream& operator<<(std::ostream& os, const ElementImpl<T, Dim, IsConst>& e) {
-    // 1. Превращаем наш элемент в tuple. Компилятор сам подставит нужный тип tuple<size_t, ..., T&>
-    // auto t = static_cast<std::tuple<size_t, size_t, std::conditional_t<IsConst, const T&, T&>>>(e);
-    auto t = static_cast<typename ElementImpl<T, Dim, IsConst>::TupleType>(e);
-    
-    os << "(";
-    // 2. С помощью std::apply распаковываем tuple и выводим элементы через запятую
-    std::apply([&os](const auto& first, const auto&... args) {
-        os << first;
-        // C++17 Fold Expression (свертка): печатает ", элемент" для каждого оставшегося аргумента
-        ((os << ", " << args), ...);
-    }, t);
-    os << ")";
-    
-    return os;
+    CommandContainer() : timestump_(0), store_() {}
+
+    void reserve(size_t size) { store_.reserve(size); }
+    void push_back(std::string str) {
+        if (store_.size() == 0)
+            set_timestump();
+        store_.push_back(std::move(str));
+    }
+    void clear() { store_.clear(); timestump_ = 0; }
+    size_t size() const noexcept { return store_.size(); }
+    int64_t timestump() const noexcept { return timestump_; }
+
+    auto begin() noexcept { return store_.begin(); }
+    auto end() noexcept { return store_.end(); }
+    auto begin() const noexcept { return store_.cbegin(); }
+    auto end() const noexcept { return store_.cend(); }
+    auto cbegin() const noexcept { return store_.cbegin(); }
+    auto cend() const noexcept { return store_.cend(); }
+
+    void print_bulk(std::ostream& stream) const {
+        if (store_.size() == 0)
+            return;
+
+        bool is_not_first = false;
+        for (auto e: store_) {
+            stream << (is_not_first ? ", " : "") << e;
+            is_not_first = true;
+        }
+        stream << std::endl;
+    }
+
+private:
+    void set_timestump() {
+        auto now = std::chrono::system_clock::now();
+        auto now_sec = std::chrono::time_point_cast<std::chrono::seconds>(now);
+        timestump_ = now_sec.time_since_epoch().count();
+    }
+
+    int64_t timestump_;
+    cmd_container store_;
+};
+
+struct IHandle {
+    virtual ~IHandle() = default;
+    virtual void handle(const CommandContainer& store) = 0;
+};
+
+struct CmdConsoleOutput : public IHandle {
+    CmdConsoleOutput() = default;
+    virtual ~CmdConsoleOutput() = default;
+    void handle(const CommandContainer& store) override {
+        std::cout << "bulk: ";
+        store.print_bulk(std::cout);
+    }
+};
+
+struct CmdFileOutput : public IHandle {
+    CmdFileOutput() = default;
+    virtual ~CmdFileOutput() = default;
+    void handle(const CommandContainer& store) override {
+        if (store.size() == 0)
+            return;
+
+        std::string fileName = "bulk" + std::to_string(store.timestump()) + ".log";
+        std::ofstream outFile(fileName);
+        if (outFile.is_open()) {
+            store.print_bulk(outFile);
+            outFile.close();
+        }
+    }
+};
+
+struct ChainOfResponsibility {
+    using type = IHandle;
+    using pointer = std::unique_ptr<IHandle>;
+    using store_type = std::vector<pointer>;
+
+    ChainOfResponsibility(size_t reserve = 2) : handlers() { handlers.reserve(reserve); }
+
+    void handle(CommandContainer& store) {
+        if (store.size() == 0)
+            return;
+
+        for(auto& h: handlers)
+            h->handle(store);
+        store.clear();
+    }
+
+    void addHandler(pointer ptr) {
+        handlers.push_back(std::move(ptr));
+    }
+  
+private:
+    store_type handlers;
+};
+
+int parse_args(int argc, const char* argv[]) {
+    if (argc != 2)
+        return -1;
+
+    std::string_view str(argv[1]);
+    char* end = nullptr;
+    const int i = std::strtol(str.cbegin(), & end, 0);
+    return i > 0 && end == str.cend() ? i : -1;
 }
-template<typename T, size_t Dim, typename Default = MatrixDefaultGenerator<T>>
-void print_matrix(const Matrix<T, Dim, Default>& m)
-{
-    std::cout << "Matrix size: " << m.size() << std::endl;
-    for (auto e: m)
-        std::cout << e.indices.to_string() << " = " << e.value << std::endl;
-}
 
-int main() {
-    /*
-     * For C++20
-     * constexpr auto intm1 = [](){ return -1; };
-     * Matrix<int, 2, decltype(intm1)> mi2;
-     */
-    struct MatrixIntDefaultGenerator {
-        constexpr int operator()() const { return -1; }
-    };
-    Matrix<int, 2, MatrixIntDefaultGenerator> mi2;
-    std::cout << "Matrix<int, 2>:" << std::endl;
-    std::cout << "Empty matrix size: " << mi2.size() << std::endl;
-    for (int i = 0, j = 9; i < 10; ++i, --j) {
-        mi2[i][i] = i;
-        mi2[i][j] = 9 - i;
-    }
-    // std::cout << std::endl << "Fill Matrix:" << std::endl;
-    // print_matrix(mi2);
-    std::cout << std::endl << "Fill Matrix (enumerated by std::tie):" << std::endl;
-    for (auto e: mi2) {
-        size_t x, y;
-        int v;
-        std::tie(x, y, v) = e;
-        std::cout << "[" << x << ", " << y << "] = " << v << std::endl;
-    }
-    std::cout << std::endl << "Fill Matrix (enumerated by structured bindings):" << std::endl;
-    for (auto [x, y, v]: mi2) {
-        std::cout << "[" << x << ", " << y << "] = " << v << std::endl;
+int main(int argc, const char* argv[]) {
+    const int n = parse_args(argc, argv);
+    if (n <= 0) {
+        std::cerr << "Usage: " << argv[0] << " <number of commands for batch processing>" << std::endl;
+        return EXIT_FAILURE;
     }
 
-    std::cout << std::endl << "Fill Matrix (elements as std::tuple):" << std::endl;
-    for (auto e: mi2) {
-        std::cout << e << std::endl;
+    ChainOfResponsibility cor(static_cast<size_t>(n));
+    cor.addHandler(std::make_unique<CmdConsoleOutput>());
+    cor.addHandler(std::make_unique<CmdFileOutput>());
+
+    CommandContainer cmd_store;
+    std::string cmd;
+    cmd.reserve(1024);
+    uint32_t nested_count = 0;
+    while (std::getline(std::cin, cmd)) {
+        if (cmd.size() == 0)
+            continue;
+
+        if (cmd.size() == 1) {
+            if (cmd[0] == '{') {
+                if (++nested_count == 1)
+                    cor.handle(cmd_store);
+                continue;
+            } else if (cmd[0] == '}') {
+                if (nested_count > 0) {
+                    if (--nested_count == 0)
+                        cor.handle(cmd_store);
+                    continue;
+                } else {
+                    std::cerr << "Sequence error on command '}'" << std::endl;
+                    return EXIT_FAILURE;
+                }
+            }
+        }
+
+        cmd_store.push_back(std::move(cmd));
+        if (nested_count == 0 && cmd_store.size() == static_cast<size_t>(n)) {
+            cor.handle(cmd_store);
+        }
     }
 
-    {
-        std::cout << std::endl << "Unknown element:" << std::endl;
-        auto el = mi2[1024][129];
-        std::cout << el.get_key().to_string() << " = " << int(el) << std::endl;
-    }
-    assert(mi2[100][100] == -1);
-    ((mi2[100][100] = 314) = 0) = 217;
-    assert(mi2[100][100] == 217);
-    std::cout << "Test ((mi2[100][100] = 314) = 0) = 217; is passed" << std::endl << std::endl;
-
-    struct MatrixDoubleDefaultGenerator {
-        constexpr double operator()() const { return -1.; }
-    };
-    Matrix<double, 4, MatrixDoubleDefaultGenerator> md4;
-    for (int i = 0; i < 10; ++i)
-        md4[i][i][i][i] = i * 1.5;
-    std::cout << "Matrix<double, 4>:" << std::endl;
-    print_matrix(md4);
-
-    md4.erase({5, 5, 5, 5});
-    std::cout << std::endl << "After erase [5][5][5][5]:" << std::endl;
-    std::cout << "Result of contains(5, 5, 5, 5): " << (md4.contains({5,5,5,5}) ? "true" : "false") << std::endl;
-    print_matrix(md4);
-    {
-        std::cout << std::endl << "Unknown element:" << std::endl;
-        auto el = md4[1024][129][384][0];
-        std::cout << el.get_key().to_string() << " = " << int(el) << std::endl << std::endl;
+    if (!std::cin.eof() && std::cin.fail()) {
+        std::cerr << "std::cin read error" << std::endl;
+        return EXIT_FAILURE;
     }
 
-    /* Test not found */
-    assert(mi2.find({1, 1})->value == 1);
-    assert(mi2.find({1024, 129}) == mi2.end());
-    assert(md4.find({1024, 129, 384, 0}) == md4.end());
+    if (nested_count == 0)
+        cor.handle(cmd_store);
+
+    return EXIT_SUCCESS;
 }
