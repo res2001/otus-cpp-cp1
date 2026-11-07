@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['end_0',['end',['../structCommandContainer.html#a4c607653263d86f3eb362242107781be',1,'CommandContainer::end() noexcept'],['../structCommandContainer.html#a4b11059f896ac5006f313dcfaed37931',1,'CommandContainer::end() const noexcept']]]
+  ['exclude_0',['exclude',['../structParametersType.html#a19bc95514d27c8a9f90891c108b40e32',1,'ParametersType']]]
 ];

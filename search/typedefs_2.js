@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['store_5ftype_0',['store_type',['../structChainOfResponsibility.html#a41f611f0eb1ed399a8e14d0061a4f563',1,'ChainOfResponsibility']]]
+  ['filecontainer_0',['FileContainer',['../DuplicateScanDescription_8h.html#a492804662887d32dc19bd48971dd877c',1,'DuplicateScanDescription.h']]]
 ];

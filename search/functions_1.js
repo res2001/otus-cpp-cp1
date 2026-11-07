@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['begin_0',['begin',['../structCommandContainer.html#a1a7e3f39430eeb719b10865c38552c41',1,'CommandContainer::begin() noexcept'],['../structCommandContainer.html#a707044e0d5853220ab48ee29c4205ae0',1,'CommandContainer::begin() const noexcept']]],
-  ['boost_5fauto_5ftest_5fcase_1',['BOOST_AUTO_TEST_CASE',['../test__version_8cpp.html#a5a8f1e117b104260d857ed534915b417',1,'test_version.cpp']]]
+  ['crc32hash_0',['Crc32Hash',['../classCrc32Hash.html#a99424642c0277a6aeacaaa4c4e9e9a3a',1,'Crc32Hash::Crc32Hash()'],['../classCrc32Hash.html#aa99e8eff84dca36ea0230faca70cad71',1,'Crc32Hash::Crc32Hash(uint32_t value)']]]
 ];

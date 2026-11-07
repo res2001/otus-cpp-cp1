@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pointer_0',['pointer',['../structChainOfResponsibility.html#af1a6a453f048906a45626d88ed32fabc',1,'ChainOfResponsibility']]]
+  ['dublicatecontainer_0',['DublicateContainer',['../DuplicateScanDescription_8h.html#a9582b26950647ec76211c51ce5ca888a',1,'DuplicateScanDescription.h']]]
 ];

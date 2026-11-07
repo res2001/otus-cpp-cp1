@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['ihandle_0',['IHandle',['../structIHandle.html',1,'']]]
+  ['filedescription_0',['FileDescription',['../structFileDescription.html',1,'']]],
+  ['filedescriptiontemp_1',['FileDescriptionTemp',['../structFileDescriptionTemp.html',1,'']]]
 ];
