@@ -144,7 +144,7 @@ bool parse_args(int argc, const char* argv[], ParametersType& param)
         ("exclude,e", bpo::value<std::vector<std::string>>(), "Subpath exclude mask\nMay be specified more than once")
         ("hash,H", bpo::value<std::string>()->default_value(param.hash_to_string()), "Hash algorithm\nAllowed value: md5 or crc32")
         ("depth,l", bpo::value<uint32_t>()->default_value(param.scan_depth), "Scan depth.\n\t0 - Scan without restrictions.")
-        ("min_file_size,s", bpo::value<size_t>()->default_value(param.min_file_size), "Minimum file size for scanning\nThe value must be greater than 0")
+        ("min_file_size,s", bpo::value<size_t>()->default_value(param.min_file_size), "Minimum file size for scanning")
         ("block_size,b", bpo::value<size_t>()->default_value(param.block_size), (std::string("Read block size\nAllowed range: [") + std::to_string(ParametersType::block_size_min) + 
             "; " + std::to_string(ParametersType::block_size_max) + "]").c_str());
 
