@@ -213,12 +213,12 @@ static void scan_directory(
             if (ec)
                 break;
 
-            if (file_size == 0) {
-                dlog << "  Skip empty file: \"" << full_path << "\"\n";
+            if (file_size < sd.param.min_file_size) {
+                dlog << "  Skip file size: \"" << full_path << "\"\n";
                 break;
             }
 
-            // 1. Вычисляем относительный путь относительно базового пути
+            // 1. Выделяем относительный путь (относительно базового пути)
             fs::path relative_path = fs::relative(it->path(), scan_path, ec);
             if (ec)
                 break;
@@ -290,8 +290,6 @@ static void print_dublicate_file(const ScanDescription& sd)
 
     std::cout << "Dublicate files:\n";
     for (const auto fdit: sd.double_files) {
-        assert(fdit->is_fully_read && fdit->block_hashes.size() > 0);
-
         for (const auto& dit: fdit->dublicate) {
             std::cout << " " << sd.GetFullPath(dit) << std::endl;
         }

@@ -19,8 +19,7 @@ struct ParametersType {
     constexpr static const char* mask_file_default = "*";
     constexpr static const char* hash_name[] = {"none", "crc32", "md5"};
     constexpr static HashAlgoEnum hash_algo_default = HASH_ALGO_CRC32;
-    constexpr static size_t min_file_size_min = 1;
-    constexpr static size_t min_file_size_default = 1;
+    constexpr static size_t min_file_size_default = 0;
     constexpr static size_t block_size_min = 1;
     constexpr static size_t block_size_max = 1024 * 1024;
     constexpr static size_t block_size_default = 512;
@@ -39,7 +38,7 @@ struct ParametersType {
     static bool isValidExcludeDir(const std::string& dir) noexcept { return dir.size() != 0; }
     static bool isValidMaskFile(const std::string& mask) noexcept { return mask.size() != 0; }
     static bool isValidHash(HashAlgoEnum hash) noexcept { return hash != HASH_ALGO_NONE; }
-    static bool isValidMinFileSize(size_t min_file_size) noexcept { return min_file_size >= min_file_size_min; }
+    static bool isValidMinFileSize(size_t /*min_file_size*/) noexcept { return true; }
     static bool isValidBlockSize(size_t block_size) noexcept { return block_size >= block_size_min && block_size <= block_size_max; }
     static bool isValidDepth(uint32_t scan_depth) noexcept { return scan_depth <= scan_depth_max; }
 
