@@ -94,7 +94,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a3ed7185b47876c6586eda6152e83807d" id="r_a3ed7185b47876c6586eda6152e83807d"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3ed7185b47876c6586eda6152e83807d">isValidExcludeDir</a> (const std::string &amp;dir) noexcept</td></tr>
 <tr class="memitem:a2250f5e5c186a4e554e41b4878e8dc59" id="r_a2250f5e5c186a4e554e41b4878e8dc59"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2250f5e5c186a4e554e41b4878e8dc59">isValidMaskFile</a> (const std::string &amp;mask) noexcept</td></tr>
 <tr class="memitem:ab13cb21c0aa5d8443bb667af54715400" id="r_ab13cb21c0aa5d8443bb667af54715400"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab13cb21c0aa5d8443bb667af54715400">isValidHash</a> (<a class="el" href="ParametersType_8h.html#a887f1c45b1280d0007d39297b8afdcf3">HashAlgoEnum</a> <a class="el" href="namespacehash.html">hash</a>) noexcept</td></tr>
-<tr class="memitem:afe8c5ded659ec2dcfe23630d46939ec4" id="r_afe8c5ded659ec2dcfe23630d46939ec4"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe8c5ded659ec2dcfe23630d46939ec4">isValidMinFileSize</a> (size_t <a class="el" href="#a8690286d20a09ff8e441572be309aa71">min_file_size</a>) noexcept</td></tr>
+<tr class="memitem:aa08163f4c21966dab12d32253bfdd40d" id="r_aa08163f4c21966dab12d32253bfdd40d"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa08163f4c21966dab12d32253bfdd40d">isValidMinFileSize</a> (size_t) noexcept</td></tr>
 <tr class="memitem:ad322c5f7006fc06ea872c5a39055da88" id="r_ad322c5f7006fc06ea872c5a39055da88"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad322c5f7006fc06ea872c5a39055da88">isValidBlockSize</a> (size_t <a class="el" href="#a8c18bd031a2eb4a2898a0dd55c51f8b1">block_size</a>) noexcept</td></tr>
 <tr class="memitem:a086fdb1032e0f0fcf9ab6ea64457e163" id="r_a086fdb1032e0f0fcf9ab6ea64457e163"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a086fdb1032e0f0fcf9ab6ea64457e163">isValidDepth</a> (uint32_t <a class="el" href="#a8b8d9f88e4c8915d8596f7883e2a7639">scan_depth</a>) noexcept</td></tr>
 <tr class="memitem:a44d302e6eba7ef55c36d6d3d3f620913" id="r_a44d302e6eba7ef55c36d6d3d3f620913"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="ParametersType_8h.html#a887f1c45b1280d0007d39297b8afdcf3">HashAlgoEnum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44d302e6eba7ef55c36d6d3d3f620913">string_to_hash</a> (const std::string_view &amp;hash_algo_arg) noexcept</td></tr>
@@ -115,8 +115,7 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:aef3124e4243c688cf440ee2404a15af2" id="r_aef3124e4243c688cf440ee2404a15af2"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef3124e4243c688cf440ee2404a15af2">mask_file_default</a> = &quot;*&quot;</td></tr>
 <tr class="memitem:a7e4f8352ce63c19ff3be680a273b2976" id="r_a7e4f8352ce63c19ff3be680a273b2976"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e4f8352ce63c19ff3be680a273b2976">hash_name</a> [] = {&quot;none&quot;, &quot;crc32&quot;, &quot;md5&quot;}</td></tr>
 <tr class="memitem:ab34fe893f3b1f579f1909a54911b08d0" id="r_ab34fe893f3b1f579f1909a54911b08d0"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="ParametersType_8h.html#a887f1c45b1280d0007d39297b8afdcf3">HashAlgoEnum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab34fe893f3b1f579f1909a54911b08d0">hash_algo_default</a> = <a class="el" href="ParametersType_8h.html#a887f1c45b1280d0007d39297b8afdcf3acc525b3b8359dd01a093fabdc7a3661e">HASH_ALGO_CRC32</a></td></tr>
-<tr class="memitem:a28f845c3e6099679295ca2eacd8745ec" id="r_a28f845c3e6099679295ca2eacd8745ec"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28f845c3e6099679295ca2eacd8745ec">min_file_size_min</a> = 1</td></tr>
-<tr class="memitem:a83cf6ab157f4cb4bfaeedcf6455a235f" id="r_a83cf6ab157f4cb4bfaeedcf6455a235f"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a83cf6ab157f4cb4bfaeedcf6455a235f">min_file_size_default</a> = 1</td></tr>
+<tr class="memitem:a83cf6ab157f4cb4bfaeedcf6455a235f" id="r_a83cf6ab157f4cb4bfaeedcf6455a235f"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a83cf6ab157f4cb4bfaeedcf6455a235f">min_file_size_default</a> = 0</td></tr>
 <tr class="memitem:a79b49e9ce87757d3d5873dab9b64d9a4" id="r_a79b49e9ce87757d3d5873dab9b64d9a4"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79b49e9ce87757d3d5873dab9b64d9a4">block_size_min</a> = 1</td></tr>
 <tr class="memitem:ae9bd6d1d540da8b217be196a7dd533a7" id="r_ae9bd6d1d540da8b217be196a7dd533a7"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae9bd6d1d540da8b217be196a7dd533a7">block_size_max</a> = 1024 * 1024</td></tr>
 <tr class="memitem:abc0f5b2ec40521cda37e22cd79adc007" id="r_abc0f5b2ec40521cda37e22cd79adc007"><td class="memItemLeft" align="right" valign="top">static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc0f5b2ec40521cda37e22cd79adc007">block_size_default</a> = 512</td></tr>
@@ -299,8 +298,8 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="afe8c5ded659ec2dcfe23630d46939ec4" name="afe8c5ded659ec2dcfe23630d46939ec4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe8c5ded659ec2dcfe23630d46939ec4">&#9670;&#160;</a></span>isValidMinFileSize()</h2>
+<a id="aa08163f4c21966dab12d32253bfdd40d" name="aa08163f4c21966dab12d32253bfdd40d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa08163f4c21966dab12d32253bfdd40d">&#9670;&#160;</a></span>isValidMinFileSize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -311,7 +310,7 @@ Static Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">bool ParametersType::isValidMinFileSize </td>
           <td>(</td>
-          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>min_file_size</em></span></td><td>)</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -587,29 +586,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t ParametersType::min_file_size_default = 1</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a28f845c3e6099679295ca2eacd8745ec" name="a28f845c3e6099679295ca2eacd8745ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28f845c3e6099679295ca2eacd8745ec">&#9670;&#160;</a></span>min_file_size_min</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t ParametersType::min_file_size_min = 1</td>
+          <td class="memname">size_t ParametersType::min_file_size_default = 0</td>
         </tr>
       </table>
   </td>

@@ -10,6 +10,6 @@ var searchData=
   ['isvalidexcludedir_7',['isValidExcludeDir',['../structParametersType.html#a3ed7185b47876c6586eda6152e83807d',1,'ParametersType']]],
   ['isvalidhash_8',['isValidHash',['../structParametersType.html#ab13cb21c0aa5d8443bb667af54715400',1,'ParametersType']]],
   ['isvalidmaskfile_9',['isValidMaskFile',['../structParametersType.html#a2250f5e5c186a4e554e41b4878e8dc59',1,'ParametersType']]],
-  ['isvalidminfilesize_10',['isValidMinFileSize',['../structParametersType.html#afe8c5ded659ec2dcfe23630d46939ec4',1,'ParametersType']]],
+  ['isvalidminfilesize_10',['isValidMinFileSize',['../structParametersType.html#aa08163f4c21966dab12d32253bfdd40d',1,'ParametersType']]],
   ['isvalidscandir_11',['isValidScanDir',['../structParametersType.html#ac11d9bd5bd8cf910f72db0903a66f098',1,'ParametersType']]]
 ];
