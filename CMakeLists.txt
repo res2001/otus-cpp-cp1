@@ -7,67 +7,38 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-project(bulk VERSION ${PROJECT_VESRION})
+project(async VERSION ${PROJECT_VESRION})
 
-option(WITH_BOOST_TEST "Whether to build Boost test" OFF)
+set(Boost_USE_STATIC_LIBS ON)
+find_package(Boost 1.74 REQUIRED COMPONENTS program_options regex)
+find_library(ICU_UC NAMES icuuc REQUIRED)
 
 configure_file(version.h.in version.h)
 
-add_executable(${PROJECT_NAME} main.cpp)
-add_library(helloworld lib.cpp)
+add_library(${PROJECT_NAME} SHARED async.cpp async.h)
+set_target_properties(${PROJECT_NAME} PROPERTIES VERSION ${PROJECT_VESRION} SOVERSION 0)
 
-target_include_directories(${PROJECT_NAME}
-    PRIVATE "${CMAKE_BINARY_DIR}"
-)
-
-if(WITH_BOOST_TEST)
-    find_package(Boost COMPONENTS unit_test_framework REQUIRED)
-    add_executable(test_version test_version.cpp)
-
-    set_target_properties(test_version PROPERTIES
-        COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
-        INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
-    )
-
-    target_link_libraries(test_version
-        ${Boost_LIBRARIES}
-        helloworld
-    )
-endif()
+add_executable(bulk main.cpp parse_args.cpp utils.cpp fwd.h async.h)
+target_link_libraries(bulk async Boost::program_options Boost::regex icuuc icui18n)
+target_include_directories(bulk PRIVATE "${CMAKE_BINARY_DIR}")
 
 if (MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE
-        /W4
-    )
-    target_compile_options(helloworld PRIVATE
-        /W4
-    )
-    if(WITH_BOOST_TEST)
-        target_compile_options(test_version PRIVATE
-            /W4
-        )
-    endif()
+    add_compile_options(/W4)
 else ()
-    target_compile_options(${PROJECT_NAME} PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
-    target_compile_options(helloworld PRIVATE
-        -Wall -Wextra -pedantic -Werror
-    )
-    if(WITH_BOOST_TEST)
-        target_compile_options(test_version PRIVATE
-            -Wall -Wextra -pedantic -Werror
-        )
-    endif()
+    add_compile_options(-Wall -Wextra -pedantic)
 endif()
 
-install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+install(TARGETS ${PROJECT_NAME} LIBRARY DESTINATION lib)
+install(TARGETS bulk RUNTIME DESTINATION bin)
 
 set(CPACK_GENERATOR DEB)
 set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
 set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 set(CPACK_PACKAGE_CONTACT example@example.com)
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+set(CPACK_DEBIAN_PACKAGE_GENERATE_SHLIBS ON)
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libboost-all-dev (>= 1.74.0)")
 include(CPack)
 
 if(WITH_BOOST_TEST)
