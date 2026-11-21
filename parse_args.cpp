@@ -32,7 +32,7 @@ static std::string win_wchar_to_utf8(const wchar_t* wstr)
     } while(false);
 
     std::stringstream ss;
-    ss << "WideCharToMultiByte() is failed\n"
+    ss << "WideCharToMultiByte() is failed\n";
     throw std::invalid_argument(ss.str());
 }
 #endif

@@ -51,7 +51,8 @@ public:
             if (finish.load(std::memory_order_relaxed))
                 return nullptr;
 
-            cv.wait_for(lk, std::chrono::milliseconds(100), [this] { return !q.empty() || finish.load(std::memory_order_relaxed); });
+            // cv.wait_for(lk, std::chrono::milliseconds(100), [this] { return !q.empty() || finish.load(std::memory_order_relaxed); });
+            cv.wait(lk);
         }
 
         element_type e = std::move(q.front());
@@ -252,7 +253,7 @@ static void thread_handle(IHandle& handle, QueueCommandType& q)
 
 static void thread_reader(CommandData& cmd_data)
 {
-    std::vector<char> cmd(params.cmd_len_max, 0);
+    std::vector<char> cmd(params.cmd_len_max + 1, 0);
     while (cmd_data.is_read_good())
         cmd_data.ReadCommand(cmd.data(), cmd.size());
 }

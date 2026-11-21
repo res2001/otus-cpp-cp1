@@ -3,17 +3,15 @@
 #include <cstring>
 #include <iostream>
 #include <fstream>
+#include <memory>
+#include <limits>
 #include <stdexcept>
 #include <cassert>
 
-class CommandFileReader {
-    std::istream* fs = nullptr;
-    bool is_ref = false;
-
-public:
-    CommandFileReader(std::istream& stream) : fs(& stream), is_ref(true) {}
-    CommandFileReader(std::string file_name) : fs(new std::ifstream(file_name)) {}
-    ~CommandFileReader() { if (!is_ref) delete fs; }
+struct CommandFileReader {
+    using stream_deleter_type = void(*)(std::istream*);
+    CommandFileReader(std::istream& stream, stream_deleter_type deleter = [](std::istream*){/* empty deleter */}) : fs(& stream, deleter) {}
+    CommandFileReader(std::string file_name) : fs(new std::ifstream(file_name), [](std::istream* del_obj){ delete del_obj; }) {}
     int StreamIsGood() ASYNC_NOEXCEPT {
         if (fs == nullptr) return -1;
         if (fs->good()) return 0;
@@ -22,18 +20,27 @@ public:
     }
     long ReadCommand(char* buf, size_t buf_size) ASYNC_NOEXCEPT
     {
-        assert(buf && buf_size > 0);
-        long ret = StreamIsGood();
-        if (ret == 0) {
-            fs->getline(buf, buf_size);
-            const long read_size = fs->gcount();
-            if (read_size > 0)
-                ret = read_size - 1;
-            else
-                ret = fs->eof() ? -2 : -1;
-        }
+        if (buf == NULL || buf_size == 0)
+            return -1;
+        long ret = 0;
+        fs->getline(buf, buf_size);
+        const long read_size = fs->gcount();
+        if (read_size > 0) {
+            ret = read_size - 1;
+            if (fs->fail() && !fs->bad()) {
+                std::cerr << "\nBuffer overflow. Truncate commands!\n";
+                fs->clear();
+                fs->ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+        } else if (fs->eof())
+            ret = -2;
+        else if (fs->bad())
+            ret = -1;
         return ret;
     }
+
+private:
+    std::unique_ptr<std::istream, stream_deleter_type> fs;
 };
 
 void disconnect(input_command_type in) ASYNC_NOEXCEPT
